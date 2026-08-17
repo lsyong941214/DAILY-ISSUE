@@ -1,0 +1,48 @@
+name: YouTube to KakaoTalk
+
+on:
+  schedule:
+    # 매시 정각 (UTC). 유튜브 RSS는 새 영상 반영까지 몇 분 걸릴 수 있다.
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+# 같은 시간에 두 번 돌면서 상태 파일이 충돌하지 않도록
+concurrency:
+  group: youtube-kakao
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for new videos and send to KakaoTalk
+        env:
+          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          # 없으면 영상 설명 앞부분으로 대체된다 (선택 사항)
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YOUTUBE_CHANNEL_ID: UCC3yfxS5qC6PCwDzetUuEWg
+          YOUTUBE_HANDLE: sosumonkey
+        run: python3 .github/scripts/youtube_kakao.py
+
+      - name: Save sent-video state
+        run: |
+          if [ -z "$(git status --porcelain data/youtube_seen.json)" ]; then
+            echo "상태 변화 없음"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/youtube_seen.json
+          git commit -m "Update YouTube notification state"
+          for i in 1 2 3 4; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            echo "push 실패, 재시도 ${i}"
+            sleep $((2 ** i))
+          done
+          exit 1
