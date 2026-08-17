@@ -1,0 +1,19 @@
+name: Send Kakao Briefing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "briefing.txt"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send briefing to KakaoTalk
+        env:
+          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+        run: python3 .github/scripts/send_kakao.py
