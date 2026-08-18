@@ -26,6 +26,8 @@ STATE_FILE = os.environ.get("YOUTUBE_STATE_FILE", "data/youtube_seen.json")
 KEEP_IDS = 200
 # 카카오톡 요약 길이 상한 (짧게 유지)
 SUMMARY_LIMIT = int(os.environ.get("YOUTUBE_SUMMARY_LIMIT", "85"))
+# 이미 보낸 영상이어도 다시 처리 (수동 재실행용)
+FORCE = os.environ.get("YOUTUBE_FORCE", "").lower() in ("1", "true", "yes")
 # 이번 실행에서 새로 알린 영상 목록 (티스토리 자료 생성 단계가 읽어간다)
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 
@@ -192,9 +194,11 @@ def main():
     state = load_state()
     seen = state["seen"] if state else []
 
-    if latest["id"] in seen:
+    if latest["id"] in seen and not FORCE:
         print(f"새 영상이 없습니다. (최신: {latest['title']})")
         return
+    if latest["id"] in seen:
+        print("[info] 강제 실행: 이미 보낸 영상을 다시 처리합니다.")
 
     access_token = kakao_client.get_access_token()
     kakao_client.send_text(access_token, build_message(latest), latest["url"])
