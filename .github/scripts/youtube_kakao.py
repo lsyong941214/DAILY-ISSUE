@@ -2,7 +2,7 @@
 
 - 확인 대상: 피드의 가장 최근 영상 하나뿐 (지난 영상은 소급해서 보내지 않는다)
 - 이미 보낸 영상이면 아무 메시지도 보내지 않고 조용히 끝난다
-- 요약: GEMINI_API_KEY가 있으면 Gemini로 한 문장 요약, 없으면 설명 앞부분 사용
+- 요약: 자막을 받아 Gemini로 한 문장 요약. 자막이 없으면 제목·설명으로, 키가 없으면 설명 앞부분
 - 전송: 카카오톡 '나에게 보내기' (kakao_client.py)
 - 중복 방지: data/youtube_seen.json 에 이미 보낸 영상 ID 저장
 """
@@ -18,7 +18,9 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 
 import gemini_client
+import http_util
 import kakao_client
+import youtube_transcript
 
 CHANNEL_ID = os.environ.get("YOUTUBE_CHANNEL_ID", "UCC3yfxS5qC6PCwDzetUuEWg")
 CHANNEL_HANDLE = os.environ.get("YOUTUBE_HANDLE", "sosumonkey")
@@ -35,11 +37,6 @@ SKIP_KAKAO = os.environ.get("YOUTUBE_SKIP_KAKAO", "").lower() in ("1", "true", "
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 
 FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
-# 봇으로 보이는 UA는 유튜브가 차단하는 경우가 있어 일반 브라우저 UA를 쓴다.
-USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
-)
 # 유튜브가 일시적으로 404/429를 주는 경우가 있어 몇 번 다시 시도한다.
 FEED_RETRY_WAITS = [5, 15, 30]
 
@@ -53,25 +50,7 @@ KST = timezone(timedelta(hours=9))
 
 
 def http_get(url, timeout=30):
-    waits = list(FEED_RETRY_WAITS)
-    while True:
-        req = urllib.request.Request(
-            url,
-            headers={
-                "User-Agent": USER_AGENT,
-                "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            },
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
-                return resp.read()
-        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
-            if not waits:
-                raise
-            wait = waits.pop(0)
-            print(f"[warn] 조회 실패({exc}). {wait}초 뒤 다시 시도합니다.")
-            time.sleep(wait)
+    return http_util.get(url, timeout=timeout, retry_waits=FEED_RETRY_WAITS)
 
 
 def resolve_channel_id(handle):
@@ -175,21 +154,29 @@ def format_published(value):
     return dt.astimezone(KST).strftime("%m/%d %H:%M")
 
 
-def summarize_with_llm(title, description, max_chars):
-    """Gemini로 영상 핵심을 한 문장 요약. 키가 없거나 실패하면 None."""
+def summarize_with_llm(entry, max_chars):
+    """Gemini로 영상 핵심을 한 문장 요약. 자막이 있으면 자막 내용을 근거로 쓴다."""
     if not gemini_client.available():
         return None
+
+    transcript = entry.get("transcript") or ""
+    if transcript:
+        source = f"[자막]\n{transcript[:15000]}"
+        basis = "자막에 실제로 나온 내용만 근거로 쓰기"
+    else:
+        source = f"[설명]\n{(entry.get('description') or '')[:2000]}"
+        basis = "설명란이 부실하면 제목만 보고 핵심 주제를 적기"
 
     prompt = (
         "다음 유튜브 영상이 무엇을 말하는 영상인지 한국어 한 문장으로 요약하세요.\n"
         f"- 공백 포함 {max_chars}자 이내, 반드시 한 문장\n"
         "- 인사말·머리말·따옴표 없이 요약문만 출력\n"
         "- '이 영상은' 같은 군더더기 없이 핵심 내용부터 바로 쓰기\n"
-        "- 설명란이 부실하면 제목만 보고 핵심 주제를 적기\n\n"
-        f"[제목] {title}\n[설명] {description[:2000]}"
+        f"- {basis}\n\n"
+        f"[제목] {entry['title']}\n{source}"
     )
     try:
-        return gemini_client.generate(prompt, max_output_tokens=2048, timeout=120) or None
+        return gemini_client.generate(prompt, max_output_tokens=2048, timeout=180) or None
     except Exception as exc:  # noqa: BLE001 - 요약 실패는 치명적이지 않다
         print(f"[warn] Gemini 요약 실패, 설명으로 대체합니다: {exc}")
     return None
@@ -218,7 +205,7 @@ def build_message(entry):
 
     summary = ""
     if budget > 20:
-        summary = summarize_with_llm(entry["title"], entry["description"], budget) or ""
+        summary = summarize_with_llm(entry, budget) or ""
         if not summary:
             summary = fallback_summary(entry["description"])
         summary = clip(summary, budget)
@@ -257,6 +244,9 @@ def main():
     latest = entries[0]
     state = load_state()
     seen = state["seen"] if state else []
+
+    # 자막을 먼저 확보한다. 요약과 원고 작성 모두 이걸 근거로 쓴다.
+    latest["transcript"] = youtube_transcript.fetch(latest["id"]) or ""
 
     if SKIP_KAKAO:
         # 카카오톡은 건너뛰고 원고 생성 단계로만 넘긴다. 상태도 건드리지 않는다.

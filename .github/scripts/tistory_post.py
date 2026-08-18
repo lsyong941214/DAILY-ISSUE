@@ -18,7 +18,7 @@ import gemini_client
 
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 CHANNEL_NAME = os.environ.get("YOUTUBE_CHANNEL_NAME", "소수몽키")
-# 영상 분석은 입력 토큰을 많이 써서 무료 한도를 빨리 소진한다. 0으로 두면 제목·설명만 쓴다.
+# 자막이 없을 때만 영상을 직접 분석한다. 영상 분석은 입력 토큰을 훨씬 많이 쓴다.
 USE_VIDEO = os.environ.get("TISTORY_USE_VIDEO", "1").lower() not in ("0", "false", "no")
 KST = timezone(timedelta(hours=9))
 
@@ -68,9 +68,10 @@ PROMPT = """당신은 경제·투자 이슈를 정리하는 한국어 블로그 
 - 링크: {url}
 - 설명란:
 {description}
+{transcript_block}
 
 [작업 지침]
-1. 첨부된 영상을 직접 보고, 어떤 주장을 어떤 근거로 펴는지 파악하세요.
+1. {source_instruction}
 2. 영상에서 언급된 수치·기업·지표는 검색으로 사실관계를 확인하세요.
    확인되지 않은 숫자는 아예 쓰지 마세요. 출처는 3개 이상 확보하세요.
 3. 영상 내용을 그대로 받아쓰지 말고, 영상이 던진 주제를 출발점으로 삼아
@@ -145,6 +146,17 @@ def clean_html(html):
 
 
 def generate(entry, today, today_ko):
+    transcript = (entry.get("transcript") or "").strip()
+    if transcript:
+        transcript_block = f"- 영상 자막(발화 내용):\n{transcript[:15000]}"
+        source_instruction = (
+            "위 자막이 영상의 실제 발화 내용입니다. 자막을 근거로 어떤 주장을 "
+            "어떤 이유로 펴는지 파악하세요. 자막에 없는 내용을 영상이 말했다고 쓰지 마세요."
+        )
+    else:
+        transcript_block = ""
+        source_instruction = "첨부된 영상을 직접 보고, 어떤 주장을 어떤 근거로 펴는지 파악하세요."
+
     prompt = PROMPT.format(
         channel=CHANNEL_NAME,
         title=entry["title"],
@@ -157,7 +169,16 @@ def generate(entry, today, today_ko):
         mark_html=MARK_HTML,
         mark_naver=MARK_NAVER,
         embed_token=EMBED_TOKEN,
+        transcript_block=transcript_block,
+        source_instruction=source_instruction,
     )
+    if transcript:
+        # 자막이 있으면 영상을 첨부할 필요가 없다. 토큰을 훨씬 적게 쓴다.
+        return _finish(
+            gemini_client.generate(prompt, max_output_tokens=12000, use_search=True, timeout=600),
+            entry,
+        )
+
     if not USE_VIDEO:
         return _finish(
             gemini_client.generate(prompt, max_output_tokens=12000, use_search=True, timeout=600),
