@@ -28,6 +28,8 @@ KEEP_IDS = 200
 SUMMARY_LIMIT = int(os.environ.get("YOUTUBE_SUMMARY_LIMIT", "85"))
 # 이미 보낸 영상이어도 다시 처리 (수동 재실행용)
 FORCE = os.environ.get("YOUTUBE_FORCE", "").lower() in ("1", "true", "yes")
+# 카카오톡 전송 없이 최신 영상만 골라 다음 단계로 넘긴다 (원고만 다시 만들 때)
+SKIP_KAKAO = os.environ.get("YOUTUBE_SKIP_KAKAO", "").lower() in ("1", "true", "yes")
 # 이번 실행에서 새로 알린 영상 목록 (티스토리 자료 생성 단계가 읽어간다)
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 
@@ -191,6 +193,13 @@ def main():
     latest = entries[0]
     state = load_state()
     seen = state["seen"] if state else []
+
+    if SKIP_KAKAO:
+        # 카카오톡은 건너뛰고 원고 생성 단계로만 넘긴다. 상태도 건드리지 않는다.
+        print(f"[info] 카카오톡 전송 없이 원고만 다시 만듭니다: {latest['title']}")
+        with open(NEW_VIDEOS_FILE, "w", encoding="utf-8") as f:
+            json.dump([latest], f, ensure_ascii=False, indent=2)
+        return
 
     if latest["id"] in seen and not FORCE:
         print(f"새 영상이 없습니다. (최신: {latest['title']})")

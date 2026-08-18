@@ -11,6 +11,10 @@ on:
         description: "이미 보낸 영상이어도 최신 영상을 다시 처리"
         type: boolean
         default: false
+      drafts_only:
+        description: "카카오톡은 보내지 않고 티스토리 원고만 다시 생성"
+        type: boolean
+        default: false
 
 # 같은 시간에 두 번 돌면서 상태 파일이 충돌하지 않도록
 concurrency:
@@ -30,13 +34,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check latest video and send to KakaoTalk
+      - name: Check latest video (and send to KakaoTalk unless drafts_only)
         env:
           KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
           KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_FORCE: ${{ inputs.force }}
+          YOUTUBE_SKIP_KAKAO: ${{ inputs.drafts_only }}
         run: python3 .github/scripts/youtube_kakao.py
 
       - name: Build Tistory drafts from new videos
