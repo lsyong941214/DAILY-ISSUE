@@ -11,6 +11,7 @@ import json
 import os
 import re
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 
 import gemini_client
@@ -155,13 +156,23 @@ def generate(entry, today, today_ko):
         mark_naver=MARK_NAVER,
         embed_token=EMBED_TOKEN,
     )
-    raw = gemini_client.generate(
-        prompt,
-        video_url=entry["url"],
-        max_output_tokens=32768,
-        use_search=True,
-        timeout=600,
-    )
+    try:
+        raw = gemini_client.generate(
+            prompt,
+            video_url=entry["url"],
+            max_output_tokens=12000,
+            use_search=True,
+            timeout=600,
+        )
+    except gemini_client.QuotaError:
+        # 영상 분석은 요청이 무거워 한도에 먼저 걸린다. 제목·설명만으로 다시 시도한다.
+        print("[warn] 한도 때문에 영상 분석을 건너뛰고 제목·설명만으로 작성합니다.")
+        raw = gemini_client.generate(
+            prompt,
+            max_output_tokens=12000,
+            use_search=True,
+            timeout=600,
+        )
     title, html, naver = split_sections(raw)
     html = clean_html(html)
 
@@ -219,15 +230,24 @@ def main():
         print("새로 전송된 영상이 없어 생성할 자료가 없습니다.")
         return
 
+    # 앞 단계(요약)와 연달아 호출하면 분당 한도에 걸리기 쉬워 잠깐 쉬어 간다.
+    time.sleep(int(os.environ.get("TISTORY_START_DELAY", "20")))
+
     now = datetime.now(KST)
     today = now.strftime("%Y-%m-%d")
     today_ko = now.strftime("%Y년 %-m월 %-d일")
     failures = 0
+    quota_blocked = False
 
     for entry in entries:
         print(f"\n=== 티스토리 자료 생성: {entry['title']}")
         try:
             title, html, naver = generate(entry, today, today_ko)
+        except gemini_client.QuotaError as exc:
+            # 무료 한도 소진은 흔한 일이라 워크플로 자체를 실패시키지 않는다.
+            print(f"[skip] 사용량 한도로 생성하지 못했습니다 ({entry['url']}): {exc}")
+            quota_blocked = True
+            continue
         except Exception as exc:  # noqa: BLE001 - 한 건 실패가 전체를 막지 않게
             print(f"[error] 생성 실패 ({entry['url']}): {exc}")
             failures += 1
@@ -236,6 +256,8 @@ def main():
         for path in paths.values():
             print(f"  생성: {path}")
 
+    if quota_blocked:
+        print("[info] 한도가 풀린 뒤 force 옵션으로 다시 실행하면 원고를 만들 수 있습니다.")
     if failures:
         sys.exit(f"{failures}건의 티스토리 자료 생성에 실패했습니다.")
 

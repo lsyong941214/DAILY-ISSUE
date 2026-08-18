@@ -12,6 +12,7 @@
 import json
 import os
 import re
+import time
 import urllib.error
 import urllib.request
 
@@ -23,6 +24,14 @@ _resolved_model = None
 
 class GeminiError(RuntimeError):
     pass
+
+
+class QuotaError(GeminiError):
+    """429 RESOURCE_EXHAUSTED. 잠시 뒤 또는 더 가벼운 요청으로 재시도할 수 있다."""
+
+
+# 429를 만났을 때 기다렸다 다시 시도할 간격(초)
+RETRY_WAITS = [20, 45, 90]
 
 
 def available():
@@ -119,12 +128,22 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
     model = _resolved_model or DEFAULT_MODEL
     tried = set()
 
-    for _ in range(4):
+    quota_waits = list(RETRY_WAITS)
+
+    for _ in range(8):
         tried.add(model)
         try:
             data = _post(f"models/{model}:generateContent", payload, timeout)
         except GeminiError as exc:
             message = str(exc)
+            # 분당/일일 한도에 걸린 경우 잠시 기다렸다 다시 시도한다.
+            if "HTTP 429" in message:
+                if quota_waits:
+                    wait = quota_waits.pop(0)
+                    print(f"[warn] 사용량 한도(429)에 걸려 {wait}초 뒤 다시 시도합니다.")
+                    time.sleep(wait)
+                    continue
+                raise QuotaError(message) from exc
             # 검색 도구를 함께 못 쓰는 경우 도구 없이 한 번 더 시도한다.
             if "HTTP 400" in message and "tools" in payload:
                 print("[warn] 검색 도구를 쓸 수 없어 도구 없이 다시 시도합니다.")
