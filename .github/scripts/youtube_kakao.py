@@ -35,7 +35,11 @@ SKIP_KAKAO = os.environ.get("YOUTUBE_SKIP_KAKAO", "").lower() in ("1", "true", "
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 
 FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
-USER_AGENT = "Mozilla/5.0 (compatible; daily-issue-bot/1.0)"
+# 봇으로 보이는 UA는 유튜브가 차단하는 경우가 있어 일반 브라우저 UA를 쓴다.
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+)
 # 유튜브가 일시적으로 404/429를 주는 경우가 있어 몇 번 다시 시도한다.
 FEED_RETRY_WAITS = [5, 15, 30]
 
@@ -51,7 +55,14 @@ KST = timezone(timedelta(hours=9))
 def http_get(url, timeout=30):
     waits = list(FEED_RETRY_WAITS)
     while True:
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": USER_AGENT,
+                "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            },
+        )
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return resp.read()
@@ -96,6 +107,41 @@ def fetch_entries(channel_id):
             }
         )
     return entries
+
+
+def fetch_latest_from_page(handle):
+    """RSS가 막혔을 때 채널 페이지 HTML에서 최신 영상 하나를 뽑는다."""
+    try:
+        html = http_get(f"https://www.youtube.com/@{handle}/videos").decode("utf-8", "replace")
+    except Exception as exc:  # noqa: BLE001 - 마지막 폴백이라 원인 구분이 필요 없다
+        print(f"[warn] 채널 페이지 조회 실패: {exc}")
+        return None
+
+    match = re.search(r'"videoId":"([A-Za-z0-9_-]{11})"', html)
+    if not match:
+        print("[warn] 채널 페이지에서 영상을 찾지 못했습니다.")
+        return None
+
+    video_id = match.group(1)
+    window = html[match.end() : match.end() + 3000]
+    title_match = re.search(r'"title":\{"runs":\[\{"text":"((?:[^"\\]|\\.)*)"', window)
+    if title_match:
+        try:
+            title = json.loads(f'"{title_match.group(1)}"')
+        except json.JSONDecodeError:
+            title = video_id
+    else:
+        title = video_id
+
+    print(f"[info] 채널 페이지에서 최신 영상을 찾았습니다: {title}")
+    return {
+        "id": video_id,
+        "title": title,
+        "published": "",
+        "description": "",
+        "url": f"https://www.youtube.com/watch?v={video_id}",
+        "short_url": f"https://youtu.be/{video_id}",
+    }
 
 
 def load_state():
@@ -191,11 +237,17 @@ def main():
     except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError) as exc:
         print(f"[warn] 피드 조회 실패({exc}). 핸들로 채널 ID를 다시 찾습니다.")
         resolved = resolve_channel_id(CHANNEL_HANDLE)
-        if not resolved or resolved == channel_id:
-            sys.exit(f"피드를 가져오지 못했습니다: {exc}")
-        channel_id = resolved
-        print(f"[info] 채널 ID를 {channel_id} 로 갱신했습니다.")
-        entries = fetch_entries(channel_id)
+        if resolved and resolved != channel_id:
+            channel_id = resolved
+            print(f"[info] 채널 ID를 {channel_id} 로 갱신했습니다.")
+        try:
+            entries = fetch_entries(channel_id)
+        except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError) as exc2:
+            print(f"[warn] 피드가 계속 막혀 채널 페이지에서 최신 영상을 찾습니다: {exc2}")
+            fallback = fetch_latest_from_page(CHANNEL_HANDLE)
+            if not fallback:
+                sys.exit(f"최신 영상을 확인하지 못했습니다: {exc}")
+            entries = [fallback]
 
     if not entries:
         print("피드에 영상이 없습니다.")
