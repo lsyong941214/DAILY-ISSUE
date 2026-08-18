@@ -11,6 +11,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -35,6 +36,8 @@ NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 
 FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
 USER_AGENT = "Mozilla/5.0 (compatible; daily-issue-bot/1.0)"
+# 유튜브가 일시적으로 404/429를 주는 경우가 있어 몇 번 다시 시도한다.
+FEED_RETRY_WAITS = [5, 15, 30]
 
 NS = {
     "atom": "http://www.w3.org/2005/Atom",
@@ -46,9 +49,18 @@ KST = timezone(timedelta(hours=9))
 
 
 def http_get(url, timeout=30):
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return resp.read()
+    waits = list(FEED_RETRY_WAITS)
+    while True:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.read()
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+            if not waits:
+                raise
+            wait = waits.pop(0)
+            print(f"[warn] 조회 실패({exc}). {wait}초 뒤 다시 시도합니다.")
+            time.sleep(wait)
 
 
 def resolve_channel_id(handle):
