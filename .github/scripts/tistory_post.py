@@ -13,7 +13,7 @@ import re
 import sys
 from datetime import datetime, timedelta, timezone
 
-import claude_client
+import gemini_client
 
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 CHANNEL_NAME = os.environ.get("YOUTUBE_CHANNEL_NAME", "소수몽키")
@@ -67,12 +67,13 @@ PROMPT = """당신은 경제·투자 이슈를 정리하는 한국어 블로그 
 {description}
 
 [작업 지침]
-1. 먼저 web_search로 이 영상이 다루는 주제의 최신 사실관계를 조사하세요.
-   수치(주가, 환율, 금리, 실적 등)와 날짜는 반드시 검색으로 확인한 것만 쓰고,
-   확인되지 않은 숫자는 아예 쓰지 마세요. 최소 3개 이상의 출처를 확보하세요.
-2. 영상 내용을 그대로 옮겨 적는 것이 아니라, 영상이 던진 주제를 출발점으로 삼아
+1. 첨부된 영상을 직접 보고, 어떤 주장을 어떤 근거로 펴는지 파악하세요.
+2. 영상에서 언급된 수치·기업·지표는 검색으로 사실관계를 확인하세요.
+   확인되지 않은 숫자는 아예 쓰지 마세요. 출처는 3개 이상 확보하세요.
+3. 영상 내용을 그대로 받아쓰지 말고, 영상이 던진 주제를 출발점으로 삼아
    독자가 스스로 판단할 수 있도록 사실과 배경을 정리하는 글을 쓰세요.
-3. 오늘 날짜는 {today}입니다.
+   영상의 주장은 "영상에서는 ~라고 봅니다"처럼 출처를 밝혀 인용하세요.
+4. 오늘 날짜는 {today}입니다.
 
 [출력 형식] 아래 세 구획을 순서대로, 마커를 정확히 그대로 써서 출력하세요.
 다른 말(설명, 인사)은 절대 붙이지 마세요.
@@ -154,12 +155,12 @@ def generate(entry, today, today_ko):
         mark_naver=MARK_NAVER,
         embed_token=EMBED_TOKEN,
     )
-    raw = claude_client.complete_streaming(
+    raw = gemini_client.generate(
         prompt,
-        max_tokens=32000,
-        effort="medium",
-        tools=[claude_client.WEB_SEARCH_TOOL],
-        timeout=180,
+        video_url=entry["url"],
+        max_output_tokens=32768,
+        use_search=True,
+        timeout=600,
     )
     title, html, naver = split_sections(raw)
     html = clean_html(html)
@@ -203,8 +204,8 @@ def write_files(out_dir, title, html, naver, video_id=""):
 
 
 def main():
-    if not claude_client.available():
-        print("[skip] ANTHROPIC_API_KEY가 없어 티스토리 자료 생성을 건너뜁니다.")
+    if not gemini_client.available():
+        print("[skip] GEMINI_API_KEY가 없어 티스토리 자료 생성을 건너뜁니다.")
         return
 
     try:

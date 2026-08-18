@@ -2,7 +2,7 @@
 
 - 확인 대상: 피드의 가장 최근 영상 하나뿐 (지난 영상은 소급해서 보내지 않는다)
 - 이미 보낸 영상이면 아무 메시지도 보내지 않고 조용히 끝난다
-- 요약: ANTHROPIC_API_KEY가 있으면 Claude로 한 문장 요약, 없으면 설명 앞부분 사용
+- 요약: GEMINI_API_KEY가 있으면 Gemini로 한 문장 요약, 없으면 설명 앞부분 사용
 - 전송: 카카오톡 '나에게 보내기' (kakao_client.py)
 - 중복 방지: data/youtube_seen.json 에 이미 보낸 영상 ID 저장
 """
@@ -16,7 +16,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 
-import claude_client
+import gemini_client
 import kakao_client
 
 CHANNEL_ID = os.environ.get("YOUTUBE_CHANNEL_ID", "UCC3yfxS5qC6PCwDzetUuEWg")
@@ -115,9 +115,9 @@ def format_published(value):
     return dt.astimezone(KST).strftime("%m/%d %H:%M")
 
 
-def summarize_with_claude(title, description, max_chars):
-    """Claude로 영상 핵심을 한 문장 요약. 키가 없거나 실패하면 None."""
-    if not claude_client.available():
+def summarize_with_llm(title, description, max_chars):
+    """Gemini로 영상 핵심을 한 문장 요약. 키가 없거나 실패하면 None."""
+    if not gemini_client.available():
         return None
 
     prompt = (
@@ -129,11 +129,9 @@ def summarize_with_claude(title, description, max_chars):
         f"[제목] {title}\n[설명] {description[:2000]}"
     )
     try:
-        return claude_client.complete(prompt, max_tokens=1000, effort="low") or None
-    except claude_client.RefusalError:
-        print("[warn] Claude가 요약을 거부했습니다. 설명으로 대체합니다.")
+        return gemini_client.generate(prompt, max_output_tokens=2048, timeout=120) or None
     except Exception as exc:  # noqa: BLE001 - 요약 실패는 치명적이지 않다
-        print(f"[warn] Claude 요약 실패, 설명으로 대체합니다: {exc}")
+        print(f"[warn] Gemini 요약 실패, 설명으로 대체합니다: {exc}")
     return None
 
 
@@ -160,7 +158,7 @@ def build_message(entry):
 
     summary = ""
     if budget > 20:
-        summary = summarize_with_claude(entry["title"], entry["description"], budget) or ""
+        summary = summarize_with_llm(entry["title"], entry["description"], budget) or ""
         if not summary:
             summary = fallback_summary(entry["description"])
         summary = clip(summary, budget)
