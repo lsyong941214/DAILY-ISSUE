@@ -2,7 +2,7 @@
 
 - 확인 대상: 피드의 가장 최근 영상 하나뿐 (지난 영상은 소급해서 보내지 않는다)
 - 이미 보낸 영상이면 아무 메시지도 보내지 않고 조용히 끝난다
-- 요약: 자막을 받아 Gemini로 한 문장 요약. 자막이 없으면 제목·설명으로, 키가 없으면 설명 앞부분
+- 정리: 자막을 근거로 '이슈 → 영향 → 관점' 브리핑 작성 (미국 주식 관점)
 - 전송: 카카오톡 '나에게 보내기' (kakao_client.py)
 - 중복 방지: data/youtube_seen.json 에 이미 보낸 영상 ID 저장
 """
@@ -27,8 +27,8 @@ CHANNEL_HANDLE = os.environ.get("YOUTUBE_HANDLE", "sosumonkey")
 CHANNEL_NAME = os.environ.get("YOUTUBE_CHANNEL_NAME", "소수몽키")
 STATE_FILE = os.environ.get("YOUTUBE_STATE_FILE", "data/youtube_seen.json")
 KEEP_IDS = 200
-# 카카오톡 요약 길이 상한 (짧게 유지)
-SUMMARY_LIMIT = int(os.environ.get("YOUTUBE_SUMMARY_LIMIT", "85"))
+# 카카오톡 브리핑 본문 길이 상한
+BRIEF_LIMIT = int(os.environ.get("YOUTUBE_BRIEF_LIMIT", "420"))
 # 이미 보낸 영상이어도 다시 처리 (수동 재실행용)
 FORCE = os.environ.get("YOUTUBE_FORCE", "").lower() in ("1", "true", "yes")
 # 카카오톡 전송 없이 최신 영상만 골라 다음 단계로 넘긴다 (원고만 다시 만들 때)
@@ -154,32 +154,74 @@ def format_published(value):
     return dt.astimezone(KST).strftime("%m/%d %H:%M")
 
 
-def summarize_with_llm(entry, max_chars):
-    """Gemini로 영상 핵심을 한 문장 요약. 자막이 있으면 자막 내용을 근거로 쓴다."""
+BRIEF_PROMPT = """당신은 미국 주식에 투자하는 사람에게 아침 브리핑을 써 주는 애널리스트입니다.
+아래 유튜브 영상(미국 증시 현황·변동사항을 다루는 채널)의 내용을 정리하세요.
+
+[정리 관점]
+- 정확한 수치 나열은 중요하지 않습니다. **누가 무엇을 했고, 그게 어디에 어떤 영향을 주는지**가 핵심입니다.
+- 어느 기업·국가·기관이 어떤 발표나 결정을 했는지 사실을 먼저 짚으세요.
+- 그 사건이 어떤 섹터나 종목의 주가에 어떻게 작용하는지(수혜/타격, 방향과 이유) 쓰세요.
+- 투자자가 지금 무엇을 봐야 하는지 관점을 한 덩어리로 정리하세요.
+- 영상이 여러 주제를 다루면 가장 중요한 1~2개만 고르세요.
+- 영상에 없는 내용을 지어내지 마세요. 종목명·티커는 영상에서 언급된 것만 씁니다.
+
+[출력 형식] 아래 형식을 그대로 지키세요. 다른 말은 붙이지 마세요.
+
+📌 이슈
+(무엇이 일어났는지 1~2줄, 각 줄 45자 이내)
+
+📈 영향
+· (영향받는 섹터/종목과 방향, 45자 이내)
+· (다른 하나, 45자 이내. 없으면 이 줄 생략)
+
+🧭 관점
+(투자자가 봐야 할 포인트 1~2줄, 각 줄 45자 이내)
+
+[영상 제목] {title}
+{source}
+"""
+
+
+def build_brief(entry):
+    """자막을 근거로 '이슈 → 영향 → 관점' 브리핑을 만든다. 실패하면 None."""
     if not gemini_client.available():
         return None
 
-    transcript = entry.get("transcript") or ""
+    transcript = (entry.get("transcript") or "").strip()
     if transcript:
-        source = f"[자막]\n{transcript[:15000]}"
-        basis = "자막에 실제로 나온 내용만 근거로 쓰기"
+        source = f"[영상 자막]\n{transcript[:15000]}"
     else:
-        source = f"[설명]\n{(entry.get('description') or '')[:2000]}"
-        basis = "설명란이 부실하면 제목만 보고 핵심 주제를 적기"
+        description = (entry.get("description") or "").strip()
+        if not description:
+            return None
+        source = f"[영상 설명란]\n{description[:2000]}\n(자막을 받지 못해 설명란만 있습니다. 확실한 것만 쓰세요.)"
 
-    prompt = (
-        "다음 유튜브 영상이 무엇을 말하는 영상인지 한국어 한 문장으로 요약하세요.\n"
-        f"- 공백 포함 {max_chars}자 이내, 반드시 한 문장\n"
-        "- 인사말·머리말·따옴표 없이 요약문만 출력\n"
-        "- '이 영상은' 같은 군더더기 없이 핵심 내용부터 바로 쓰기\n"
-        f"- {basis}\n\n"
-        f"[제목] {entry['title']}\n{source}"
-    )
+    prompt = BRIEF_PROMPT.format(title=entry["title"], source=source)
     try:
-        return gemini_client.generate(prompt, max_output_tokens=2048, timeout=180) or None
-    except Exception as exc:  # noqa: BLE001 - 요약 실패는 치명적이지 않다
-        print(f"[warn] Gemini 요약 실패, 설명으로 대체합니다: {exc}")
-    return None
+        text = gemini_client.generate(prompt, max_output_tokens=3000, timeout=180)
+    except Exception as exc:  # noqa: BLE001 - 브리핑 실패가 알림 자체를 막으면 안 된다
+        print(f"[warn] 브리핑 작성 실패, 설명으로 대체합니다: {exc}")
+        return None
+
+    return tidy_brief(text)
+
+
+def tidy_brief(text):
+    """코드펜스 제거, 빈 줄 정리, 길이 제한."""
+    text = re.sub(r"^```[a-z]*\s*|\s*```$", "", (text or "").strip())
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    if len(text) <= BRIEF_LIMIT:
+        return text or None
+
+    # 길면 줄 단위로 잘라 낸다 (문장이 중간에 끊기지 않게)
+    kept = []
+    used = 0
+    for line in text.split("\n"):
+        if used + len(line) + 1 > BRIEF_LIMIT:
+            break
+        kept.append(line)
+        used += len(line) + 1
+    return "\n".join(kept).strip() or text[:BRIEF_LIMIT]
 
 
 def fallback_summary(description):
@@ -197,22 +239,14 @@ def clip(text, limit):
 
 def build_message(entry):
     published = format_published(entry["published"])
-    header = f"🎥 {CHANNEL_NAME}" + (f" · {published}" if published else "")
+    header = f"🇺🇸 {CHANNEL_NAME}" + (f" · {published}" if published else "")
     title = clip(entry["title"], 60)
 
-    fixed = f"{header}\n{title}\n\n\n\n{entry['short_url']}"
-    budget = min(SUMMARY_LIMIT, kakao_client.TEXT_LIMIT - len(fixed))
-
-    summary = ""
-    if budget > 20:
-        summary = summarize_with_llm(entry, budget) or ""
-        if not summary:
-            summary = fallback_summary(entry["description"])
-        summary = clip(summary, budget)
+    body = build_brief(entry) or clip(fallback_summary(entry.get("description", "")), 150)
 
     parts = [header, title]
-    if summary:
-        parts += ["", summary]
+    if body:
+        parts += ["", body]
     parts += ["", entry["short_url"]]
     return "\n".join(parts)
 
@@ -262,7 +296,7 @@ def main():
         print("[info] 강제 실행: 이미 보낸 영상을 다시 처리합니다.")
 
     access_token = kakao_client.get_access_token()
-    kakao_client.send_text(access_token, build_message(latest), latest["url"])
+    kakao_client.send_brief(access_token, build_message(latest), latest["url"])
     print(f"전송 완료: {latest['title']} ({latest['url']})")
 
     # 최신 영상 외 나머지는 '이미 본 것'으로만 기록해 소급 전송을 막는다.
