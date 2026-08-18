@@ -7,12 +7,14 @@ youtube_kakao.py가 남긴 .new_videos.json을 읽어서 영상마다
 을 생성한다. 기존 경제 이슈 자료와 같은 폴더 규칙·스타일을 따른다.
 """
 
+import html as html_mod
 import json
 import os
 import re
 import sys
 import time
 from datetime import datetime, timedelta, timezone
+from html.parser import HTMLParser
 
 import gemini_client
 
@@ -102,28 +104,59 @@ PROMPT = """당신은 미국 주식 이슈를 정리하는 한국어 블로그 �
 [HTML 규격] 티스토리 에디터에 붙여넣으므로 CSS는 전부 인라인 style로 넣습니다.
 - 전체 감싸기:
   <div style="max-width:800px; margin:0 auto; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:17px; line-height:1.8; color:#333; word-break:keep-all;">
-- 제목: <h1 style="font-size:28px; font-weight:700; line-height:1.4; color:#1a1a1a; margin:0 0 8px 0;">
-- 제목 아래 날짜 줄: <p style="font-size:14px; color:#888; margin:0 0 28px 0;">{today_ko} 기준 · {channel} 영상 정리</p>
-- 리드 문단 1개(3~4문장): <p style="margin:0 0 28px 0;">
+- 글 대제목(맨 위 1개): <h1 style="font-size:28px; font-weight:700; line-height:1.4; color:#1a1a1a; margin:0 0 8px 0;">
+- 제목 아래 기준일 줄: <p style="font-size:14px; color:#888; margin:0 0 28px 0;">{today_ko} 기준 · {channel} 영상 정리</p>
+- 도입 2~3문장: <p style="margin:0 0 28px 0;">  (왜 지금 이 주제인지)
 - 그 다음 줄에 {embed_token} 이라고만 쓰세요. (영상 임베드가 자동으로 들어갑니다)
-- 소제목(3~5개, 위 2번의 흐름이 드러나게): <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+- 본문 섹션 소제목(3~5개, 위 2번의 흐름이 드러나게):
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
 - 본문 문단: <p style="margin:0 0 18px 0;">
 - 본문 속 출처 링크: <a href="주소" target="_blank" style="color:#1a5490; text-decoration:underline;">매체명 보도</a>
 - 어려운 용어는 최소 2회 설명 박스로:
   <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:14px 18px; margin:0 0 24px 0; font-size:15px; color:#444;"><strong style="color:#1a5490;">용어</strong>란? 설명</div>
+- 핵심 수치가 여럿이면 표를 써도 됩니다. 단 <table style="width:100%; border-collapse:collapse;">이고 **열은 4개 이하**입니다.
 - 마지막에 순서대로 넣으세요:
-  (1) <h1 ...22px...>참고 자료</h1> 와 <ol style="margin:0 0 26px 0; padding-left:20px; font-size:15px; color:#555; line-height:1.9;"> 안에 검색한 출처 3개 이상
+  (1) "한 줄 정리" 박스 — 기억할 핵심 3가지:
+      <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:16px 18px; margin:0 0 26px 0;"><strong style="color:#1a5490;">한 줄 정리</strong><br>· 핵심1<br>· 핵심2<br>· 핵심3</div>
+  (2) 부록 소제목 <h1 style="font-size:20px; font-weight:700; color:#1a1a1a; margin:38px 0 14px 0; padding-bottom:8px; border-bottom:1px solid #e1e8ed;">참고 자료</h1>
+      와 <ol style="margin:0 0 26px 0; padding-left:20px; font-size:15px; color:#555; line-height:1.9;"> 안에 검색한 출처 3개 이상
       각 항목 형식: <li>매체명, <a href="주소" target="_blank" style="color:#1a5490;">「기사 제목」</a>, 날짜</li>
-  (2) <p style="font-size:13px; color:#999; background:#fafafa; padding:14px 16px; border-radius:6px; margin:0 0 26px 0;">본 글은 정보 제공을 목적으로 작성되었으며 특정 투자를 권유하지 않습니다. 수치는 작성 시점 보도를 기준으로 하며 이후 변동될 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
-  (3) <p style="font-size:14px; color:#1a5490; margin:0;">#해시태그 6~8개</p>
-- 표, 이미지, 스크립트는 넣지 마세요.
+  (3) <p style="font-size:13px; color:#999; background:#fafafa; padding:14px 16px; border-radius:6px; margin:0 0 26px 0;">본 글은 정보 제공을 목적으로 작성되었으며 특정 투자를 권유하지 않습니다. 수치는 작성 시점 보도를 기준으로 하며 이후 변동될 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
+  (4) <p style="font-size:14px; color:#1a5490; margin:0;">#해시태그 5~8개</p>
+- 금지: <h2> 등 다른 제목 태그, <style> 블록, <script>, class 속성, 외부 CSS, 이미지 태그.
+  소제목은 전부 <h1>이고 위계는 인라인 font-size로만 줍니다.
 
-[네이버용 문체]
-- "안녕하세요..!" 로 시작해 독자에게 말 거는 구어체.
-- 한 문장이 끝나면 줄바꿈을 자주 넣어 호흡을 짧게. 문단은 2~4줄.
-- 강조는 "..!" 정도만. 이모지와 HTML 태그는 쓰지 않습니다.
-- 숫자와 출처는 "(매체명, 날짜)" 형태로 문장 안에 자연스럽게 넣습니다.
-- 마지막은 담백한 마무리 인사 한 줄.
+[글쓰기 규칙]
+- 분량은 본문 1,500~2,500자.
+- 한 문단은 3~4줄 이내. 독자 대부분이 모바일로 봅니다.
+- 소제목은 사람이 실제로 검색창에 칠 법한 키워드를 앞쪽에 넣어 짓습니다.
+  "첫 번째 이슈" 같은 무의미한 소제목은 쓰지 않습니다. 키워드를 부자연스럽게 반복하지도 않습니다.
+- 대상 독자는 그 주제를 잘 모르는 일반인입니다. 전문 용어는 처음 나올 때 괄호로 풀어 줍니다
+  (예: "관세(수입품에 매기는 세금)").
+- 정보 제공형 존댓말. 낚시성 제목, 과장, "충격"·"역대급" 같은 표현은 쓰지 않습니다.
+- 기사 문장을 그대로 옮기지 않습니다. 사실만 가져오고 문장은 새로 씁니다.
+- 시점에 따라 달라지는 정보에는 기준일을 함께 적습니다.
+
+[출처 규칙] 아래 순서로 강한 출처를 우선합니다.
+1. 정부·공공기관 원자료 (연준, 미 상무부, SEC, BLS, 한국은행, 통계청 등)
+2. 기업 공식 발표 (IR 자료, 공시, 보도자료)
+3. 주요 언론사 보도 (Reuters, Bloomberg, WSJ, 연합뉴스, 한국경제 등)
+4. 증권사 리포트·전문가 코멘트 (의견임을 명시)
+- 블로그·커뮤니티·유튜브 요약글은 출처로 쓰지 않습니다.
+- **이 글의 출발점이 유튜브 영상이더라도, 글에는 그 영상이 인용한 원자료를 찾아서 답니다.**
+- 출처를 못 찾은 문장은 글에서 뺍니다. 확정 발표와 추정치를 반드시 구분해 씁니다.
+
+[네이버용 문체] 순수 텍스트입니다. HTML 태그·style·색상 강조를 쓰지 않습니다.
+- "안녕하세요..!" 로 시작해 독자에게 말 거는 구어체. 개인적인 상황·감정을 먼저 꺼낸 뒤 주제로 이어갑니다.
+- 한두 문장마다 줄을 바꿉니다. 티스토리처럼 문단으로 묶지 말고 훨씬 자주 개행합니다.
+- 솔직하고 다소 자조적인 어투("저는 ~했습니다", "~더라구요"). 강조는 독립된 한 줄이나 "..!!" 로만 줍니다.
+- 노래 가사나 남의 글을 인용하지 않습니다.
+- 사실관계·수치·출처는 티스토리 버전과 똑같이 유지합니다. 문체와 구성만 바꿉니다.
+- 출처는 "(매체명, 날짜, https://...)" 처럼 URL을 텍스트 그대로 남깁니다.
+- HTML 엔티티(&middot; &lsquo; 등)를 쓰지 말고 실제 문자(·, ')로 씁니다.
+- 영상 링크는 텍스트로 남깁니다. 이미지 자리표시는 넣지 않습니다.
+- 분량 1,200~2,000자. 하단에 참고 자료 출처와 투자 권유가 아니라는 문구를 부드러운 말투로 남깁니다.
+- 글 말미에 독자에게 말을 걸며 마무리합니다.
 """
 
 
@@ -215,7 +248,8 @@ def generate(entry, today, today_ko):
 
 def _finish(raw, entry):
     title, html, naver = split_sections(raw)
-    html = clean_html(html)
+    html = enforce_h1(clean_html(html))
+    naver = clean_naver(naver)
 
     embed = EMBED_HTML.format(
         video_id=entry["id"],
@@ -232,7 +266,114 @@ def _finish(raw, entry):
         insert_at = idx + len(marker) if idx != -1 else len(html) - len("</div>")
         html = html[:insert_at] + "\n\n" + embed + "\n" + html[insert_at:]
 
+    problems = validate(html, naver)
+    for problem in problems:
+        print(f"[check] {problem}")
+    if problems:
+        print("[warn] 위 항목은 발행 전에 확인이 필요합니다. 파일은 그대로 저장합니다.")
+
     return title.strip(), html, naver
+
+
+# --- 결과물 점검 (티스토리 스킬의 확인 목록을 그대로 자동화) ---
+
+SELF_CLOSING = {"br", "img", "hr", "meta", "input", "source"}
+
+
+class _Balance(HTMLParser):
+    """열고 닫는 태그가 맞는지 확인한다."""
+
+    def __init__(self):
+        super().__init__()
+        self.stack = []
+        self.problems = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag not in SELF_CLOSING:
+            self.stack.append(tag)
+
+    def handle_endtag(self, tag):
+        if tag in SELF_CLOSING:
+            return
+        if not self.stack:
+            self.problems.append(f"닫는 </{tag}> 가 여는 태그보다 많습니다")
+        elif self.stack[-1] != tag:
+            self.problems.append(f"<{self.stack[-1]}> 가 닫히기 전에 </{tag}> 가 나왔습니다")
+            if tag in self.stack:
+                while self.stack and self.stack.pop() != tag:
+                    pass
+        else:
+            self.stack.pop()
+
+
+def enforce_h1(html):
+    """소제목은 전부 <h1>이어야 한다. 눈으로 고치면 반드시 하나를 놓친다."""
+    fixed = re.sub(r"<h[2-6]\b", "<h1", html)
+    fixed = re.sub(r"</h[2-6]>", "</h1>", fixed)
+    if fixed != html:
+        print("[info] h2~h6 소제목을 h1으로 바꿨습니다.")
+    return fixed
+
+
+def clean_naver(text):
+    """네이버용은 순수 텍스트. 엔티티와 남은 태그를 정리한다."""
+    cleaned = html_mod.unescape(text or "")
+    if re.search(r"</?[a-zA-Z][^>]*>", cleaned):
+        cleaned = re.sub(r"</?[a-zA-Z][^>]*>", "", cleaned)
+        print("[info] 네이버용에서 HTML 태그를 제거했습니다.")
+    return re.sub(r"\n{3,}", "\n\n", cleaned).strip()
+
+
+def _table_problems(html):
+    problems = []
+    for table in re.findall(r"<table\b.*?</table>", html, re.S):
+        rows = re.findall(r"<tr\b.*?</tr>", table, re.S)
+        widest = max((len(re.findall(r"<t[hd]\b", row)) for row in rows), default=0)
+        if widest > 4:
+            problems.append(f"표의 열이 {widest}개입니다 (4개 이하여야 모바일에서 읽힙니다)")
+    return problems
+
+
+def validate(html, naver):
+    """스킬의 전달 전 확인 목록. 문제 목록을 돌려준다."""
+    problems = []
+
+    if not html.startswith("<div") or not html.rstrip().endswith("</div>"):
+        problems.append("붙여넣기용 본문이 <div>로 시작해 </div>로 끝나지 않습니다")
+    if re.search(r"</?h[2-6]\b", html):
+        problems.append("h2~h6 소제목이 남아 있습니다")
+
+    opens = len(re.findall(r"<h1\b", html))
+    closes = len(re.findall(r"</h1>", html))
+    if opens != closes:
+        problems.append(f"h1 여는 태그 {opens}개, 닫는 태그 {closes}개로 개수가 다릅니다")
+    if opens == 0:
+        problems.append("소제목(h1)이 하나도 없습니다")
+
+    for banned, label in (("<style", "<style> 블록"), ("<script", "<script>"), ("class=", "class 속성")):
+        if banned in html:
+            problems.append(f"{label} 이(가) 들어 있습니다 (티스토리에서 제거되거나 스킨과 충돌합니다)")
+
+    balance = _Balance()
+    balance.feed(html)
+    problems.extend(balance.problems)
+    if balance.stack:
+        problems.append(f"닫히지 않은 태그: {', '.join(balance.stack[:5])}")
+
+    problems.extend(_table_problems(html))
+
+    leftovers = [m for m in re.findall(r"\[[^\]\n]{2,30}\]", html) if "이미지" not in m]
+    if leftovers:
+        problems.append(f"채우지 않은 자리표시가 남아 있습니다: {leftovers[:3]}")
+
+    if re.search(r"</?[a-zA-Z][^>]*>", naver):
+        problems.append("네이버용에 HTML 태그가 남아 있습니다")
+    if "style=" in naver:
+        problems.append("네이버용에 style 속성이 남아 있습니다")
+    if re.search(r"&[a-zA-Z]+;|&#\d+;", naver):
+        problems.append("네이버용에 HTML 엔티티가 남아 있습니다")
+
+    return problems
 
 
 def write_files(out_dir, title, html, naver, video_id=""):
