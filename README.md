@@ -1,53 +1,77 @@
 # DAILY-ISSUE
 
-GitHub Actions로 돌아가는 개인 알림 자동화 모음입니다.
+GitHub Actions로 돌아가는 개인 알림·콘텐츠 자동화 모음입니다.
 
 | 워크플로 | 하는 일 | 실행 시점 |
 | --- | --- | --- |
 | `.github/workflows/kakao-briefing.yml` | `briefing.txt` 내용을 카카오톡으로 전송 | `briefing.txt`가 main에 push될 때 |
-| `.github/workflows/youtube-kakao.yml` | 유튜브 채널 새 영상을 요약해 카카오톡으로 전송 | 매시 정각 + 수동 실행 |
+| `.github/workflows/youtube-kakao.yml` | 유튜브 새 영상 → 카카오톡 알림 + 티스토리 포스팅 자료 생성 | 매시 정각 + 수동 실행 |
 
 ---
 
-## 유튜브 새 영상 → 카카오톡 루틴
+## 유튜브 새 영상 루틴
 
 대상 채널: **소수몽키** ([@sosumonkey](https://www.youtube.com/@sosumonkey), `UCC3yfxS5qC6PCwDzetUuEWg`)
 
-### 동작 방식
+### 동작 순서
 
-1. 매시 정각, 유튜브 RSS 피드(`feeds/videos.xml`)에서 최근 영상 목록을 가져옵니다. **유튜브 API 키가 필요 없습니다.**
-2. `data/youtube_seen.json`에 기록된 영상 ID와 비교해 새 영상만 골라냅니다.
-3. 제목과 설명을 Claude로 1~2문장 요약합니다. (`ANTHROPIC_API_KEY`가 없으면 영상 설명 앞부분을 그대로 사용)
-4. 카카오톡 '나에게 보내기'로 전송합니다. 메시지에는 제목, 업로드 시각(KST), 요약, 영상 링크가 들어가고 '영상 보기' 버튼이 붙습니다.
-5. 보낸 영상 ID를 `data/youtube_seen.json`에 커밋해 다음 실행 때 중복 전송을 막습니다.
+1. **새 영상 확인** — 유튜브 RSS 피드(`feeds/videos.xml`)를 읽습니다. 유튜브 API 키가 필요 없습니다.
+   `data/youtube_seen.json`에 기록된 ID와 비교해 새 영상만 골라냅니다.
+2. **카카오톡 알림** — 제목·업로드 시각(KST)·요약·링크를 '나에게 보내기'로 전송합니다.
+3. **티스토리 자료 생성** — 새 영상마다 Claude가 웹 검색으로 주제를 조사해
+   티스토리에 바로 올릴 수 있는 글을 만들어 저장소에 커밋합니다.
 
-전송 예시:
+카카오톡 메시지 예시:
 
 ```
 🎥 소수몽키 새 영상 (08/17 20:00)
 연준 회의록 공개! 시장이 놓친 한 문장
 
-연준 회의록에서 시장이 지나친 문장을 짚어보고, 다음 회의까지 체크할 일정들을 정리합니다.
+연준 회의록에서 시장이 지나친 문장을 짚어보고,
+다음 회의까지 체크할 일정들을 정리합니다.
 
-https://youtu.be/XXXXXXXXXXX
+https://youtu.be/XXXXXXXXXXX      [영상 보기 버튼]
 ```
+
+### 티스토리 자료
+
+기존 경제 이슈 자료와 **같은 폴더 규칙·같은 문서 형식**으로 `YYYY-MM-DD/` 아래에 생성됩니다.
+
+| 파일 | 용도 |
+| --- | --- |
+| `<제목>.html` | 브라우저로 열어 미리보기. 티스토리 **HTML 모드**에 통째로 붙여넣어도 됩니다 |
+| `<제목>_붙여넣기용_소스.txt` | 본문 `<div>`만 담긴 파일. 티스토리 편집기에 그대로 붙여넣기 |
+| `<제목>_네이버용.txt` | 같은 내용을 네이버 블로그 문체(구어체·짧은 줄바꿈)로 다시 쓴 텍스트 |
+
+글에 들어가는 것:
+
+- 영상 임베드(iframe)와 출처 표기
+- 소제목 3~5개로 나눈 본문, 어려운 용어 설명 박스
+- **웹 검색으로 확인한 수치와 출처 링크** — 확인되지 않은 숫자는 쓰지 않도록 지시돼 있습니다
+- 참고 자료 목록, 투자 권유가 아니라는 면책 문구, 해시태그
+
+영상 대본을 그대로 옮기는 것이 아니라, 영상이 던진 주제를 출발점으로 사실관계를 정리하는 방식입니다. **초안이므로 발행 전에 수치와 출처를 한 번 확인하시는 걸 권합니다.**
 
 ### 필요한 Secrets
 
-`Settings → Secrets and variables → Actions`에 등록합니다.
+`Settings → Secrets and variables → Actions → New repository secret`
 
 | 이름 | 필수 | 설명 |
 | --- | --- | --- |
 | `KAKAO_CLIENT_ID` | ✅ | 카카오 앱의 REST API 키 (기존 브리핑 워크플로와 동일) |
 | `KAKAO_CLIENT_SECRET` | ✅ | 카카오 앱 Client Secret |
 | `KAKAO_REFRESH_TOKEN` | ✅ | `talk_message` 동의를 받은 리프레시 토큰 |
-| `ANTHROPIC_API_KEY` | 선택 | Claude 요약용. 없으면 영상 설명으로 대체됩니다 |
+| `ANTHROPIC_API_KEY` | ✅ (티스토리 자료용) | [console.anthropic.com](https://console.anthropic.com/settings/keys)에서 발급한 `sk-ant-`로 시작하는 키 |
+
+`ANTHROPIC_API_KEY`가 없으면 카카오톡 알림은 그대로 동작하지만
+요약이 영상 설명 앞부분으로 대체되고, **티스토리 자료 생성은 건너뜁니다.**
 
 ### 첫 실행
 
-**첫 실행에서는 알림을 보내지 않습니다.** 지금 피드에 있는 영상 15개를 "이미 본 것"으로 기록만 하고, 그 다음 실행부터 새로 올라온 영상만 보냅니다. (설정 직후 과거 영상이 한꺼번에 오는 걸 막기 위한 동작입니다.)
+**첫 실행에서는 알림을 보내지 않습니다.** 지금 피드에 있는 영상들을 "이미 본 것"으로 기록만 하고,
+그 다음 실행부터 새로 올라온 영상만 처리합니다. (설정 직후 과거 영상이 한꺼번에 오는 걸 막기 위한 동작입니다.)
 
-`Actions → YouTube to KakaoTalk → Run workflow`로 한 번 수동 실행해 초기화해두는 것을 권합니다.
+`Actions → YouTube to KakaoTalk → Run workflow`로 한 번 수동 실행해 초기화해두세요.
 
 ### 조정할 수 있는 값
 
@@ -56,15 +80,28 @@ https://youtu.be/XXXXXXXXXXX
 | 환경변수 | 기본값 | 설명 |
 | --- | --- | --- |
 | `YOUTUBE_CHANNEL_ID` | `UCC3yfxS5qC6PCwDzetUuEWg` | 감시할 채널 ID |
-| `YOUTUBE_HANDLE` | `sosumonkey` | 채널 ID로 피드 조회가 실패하면 이 핸들로 ID를 다시 찾습니다 |
-| `YOUTUBE_MAX_NOTIFY` | `5` | 한 번 실행에 보낼 최대 개수 (도배 방지) |
-| `YOUTUBE_STATE_FILE` | `data/youtube_seen.json` | 전송 기록 파일 경로 |
+| `YOUTUBE_HANDLE` | `sosumonkey` | 채널 ID로 조회가 실패하면 이 핸들로 ID를 다시 찾습니다 |
+| `YOUTUBE_CHANNEL_NAME` | `소수몽키` | 메시지·글에 표기할 채널 이름 |
+| `YOUTUBE_MAX_NOTIFY` | `5` | 한 번 실행에 처리할 최대 영상 수 (도배 방지) |
+| `ANTHROPIC_MODEL` | `claude-opus-5` | 요약·글 생성에 쓰는 모델 |
 
-주기를 바꾸려면 워크플로의 `cron` 값을 수정하세요 (`"*/30 * * * *"` = 30분마다). GitHub Actions의 스케줄은 몇 분 지연될 수 있습니다.
+주기를 바꾸려면 워크플로의 `cron` 값을 수정하세요 (`"*/30 * * * *"` = 30분마다).
+GitHub Actions 스케줄은 몇 분 지연될 수 있습니다.
+
+### 스크립트 구성
+
+| 파일 | 역할 |
+| --- | --- |
+| `.github/scripts/youtube_kakao.py` | 피드 확인 → 중복 판별 → 카카오톡 전송 → 상태 기록 |
+| `.github/scripts/tistory_post.py` | 새 영상 → 웹 검색 취재 → 티스토리/네이버 원고 생성 |
+| `.github/scripts/claude_client.py` | Anthropic Messages API 호출 (표준 라이브러리만 사용) |
+| `.github/scripts/kakao_client.py` | 카카오 토큰 갱신 및 '나에게 보내기' 전송 |
+
+외부 패키지를 설치하지 않으므로 워크플로에 별도 의존성 설치 단계가 없습니다.
 
 ### 알아둘 점
 
-- 스케줄 워크플로는 **기본 브랜치(main)에 있어야** 동작합니다. 브랜치에 머지하기 전에는 자동 실행되지 않습니다.
-- 카카오 리프레시 토큰은 유효기간이 있습니다(약 60일, 사용 시 자동 갱신). 만료되면 토큰을 다시 발급받아 Secret을 갱신해야 합니다.
-- 카카오 '나에게 보내기' 텍스트 템플릿은 200자 제한이 있어, 요약 길이를 제목 길이에 맞춰 자동으로 조절합니다.
-- 유튜브 RSS에는 쇼츠와 예정된 라이브도 함께 올라옵니다. 이것들을 빼고 싶으면 알려주세요.
+- 스케줄 워크플로는 **기본 브랜치(main)에 있어야** 동작합니다.
+- 카카오 리프레시 토큰은 유효기간이 있습니다(약 60일, 사용 시 자동 갱신). 만료되면 재발급 후 Secret을 갱신하세요.
+- 카카오 '나에게 보내기' 텍스트는 200자 제한이 있어, 요약 길이를 제목 길이에 맞춰 자동 조절합니다.
+- 유튜브 RSS에는 쇼츠와 예정된 라이브도 함께 올라옵니다. 제외가 필요하면 알려주세요.

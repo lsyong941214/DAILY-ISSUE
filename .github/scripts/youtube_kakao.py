@@ -15,6 +15,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 
+import claude_client
 import kakao_client
 
 CHANNEL_ID = os.environ.get("YOUTUBE_CHANNEL_ID", "UCC3yfxS5qC6PCwDzetUuEWg")
@@ -23,6 +24,8 @@ STATE_FILE = os.environ.get("YOUTUBE_STATE_FILE", "data/youtube_seen.json")
 # 한 번 실행에 보낼 수 있는 최대 개수 (몰아서 올라올 때 도배 방지)
 MAX_NOTIFY = int(os.environ.get("YOUTUBE_MAX_NOTIFY", "5"))
 KEEP_IDS = 200
+# 이번 실행에서 새로 알린 영상 목록 (티스토리 자료 생성 단계가 읽어간다)
+NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 
 FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
 USER_AGENT = "Mozilla/5.0 (compatible; daily-issue-bot/1.0)"
@@ -110,8 +113,7 @@ def format_published(value):
 
 def summarize_with_claude(title, description, max_chars):
     """Claude로 영상 내용을 한두 문장 요약. 키가 없거나 실패하면 None."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
+    if not claude_client.available():
         return None
 
     prompt = (
@@ -120,40 +122,13 @@ def summarize_with_claude(title, description, max_chars):
         "요약문만 답하세요. 설명이 부실하면 제목만 보고 핵심 주제를 적으세요.\n\n"
         f"[제목] {title}\n[설명] {description[:2000]}"
     )
-    body = json.dumps(
-        {
-            "model": "claude-opus-5",
-            "max_tokens": 1000,
-            "output_config": {"effort": "low"},
-            "messages": [{"role": "user", "content": prompt}],
-        },
-        ensure_ascii=False,
-    ).encode()
-
-    req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages",
-        data=body,
-        headers={
-            "content-type": "application/json",
-            "x-api-key": api_key,
-            "anthropic-version": "2023-06-01",
-        },
-    )
     try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            payload = json.load(resp)
+        return claude_client.complete(prompt, max_tokens=1000, effort="low") or None
+    except claude_client.RefusalError:
+        print("[warn] Claude가 요약을 거부했습니다. 설명으로 대체합니다.")
     except Exception as exc:  # noqa: BLE001 - 요약 실패는 치명적이지 않다
         print(f"[warn] Claude 요약 실패, 설명으로 대체합니다: {exc}")
-        return None
-
-    if payload.get("stop_reason") == "refusal":
-        print("[warn] Claude가 요약을 거부했습니다. 설명으로 대체합니다.")
-        return None
-
-    text = "".join(
-        block.get("text", "") for block in payload.get("content", []) if block.get("type") == "text"
-    ).strip()
-    return text or None
+    return None
 
 
 def fallback_summary(description):
@@ -244,6 +219,10 @@ def main():
     # 전송하지 않고 건너뛴 영상도 다시 알리지 않도록 함께 기록한다.
     processed = [e["id"] for e in skipped] + sent_ids
     save_state(channel_id, list(reversed(processed)) + seen)
+
+    # 티스토리 자료 생성 단계로 넘길 목록을 남긴다.
+    with open(NEW_VIDEOS_FILE, "w", encoding="utf-8") as f:
+        json.dump(to_send, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":
