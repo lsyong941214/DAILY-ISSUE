@@ -2,8 +2,9 @@ name: YouTube to KakaoTalk
 
 on:
   schedule:
-    # 매시 정각 (UTC). 유튜브 RSS는 새 영상 반영까지 몇 분 걸릴 수 있다.
-    - cron: "0 * * * *"
+    # 매일 22:00 UTC = 한국 시간 다음날 오전 7시.
+    # 전날 저녁에 올라온 영상을 아침에 한 번 확인한다.
+    - cron: "0 22 * * *"
   workflow_dispatch:
 
 # 같은 시간에 두 번 돌면서 상태 파일이 충돌하지 않도록
@@ -24,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check for new videos and send to KakaoTalk
+      - name: Check latest video and send to KakaoTalk
         env:
           KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
