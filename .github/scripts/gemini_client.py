@@ -30,8 +30,9 @@ class QuotaError(GeminiError):
     """429 RESOURCE_EXHAUSTED. 잠시 뒤 또는 더 가벼운 요청으로 재시도할 수 있다."""
 
 
-# 429를 만났을 때 기다렸다 다시 시도할 간격(초)
-RETRY_WAITS = [20, 45, 90]
+# 429를 만났을 때 기다렸다 다시 시도할 간격(초).
+# 분당 한도는 이걸로 넘기고, 일일 한도면 어차피 기다려도 소용없으니 짧게 끊는다.
+RETRY_WAITS = [15, 40]
 
 
 def available():

@@ -18,6 +18,8 @@ import gemini_client
 
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 CHANNEL_NAME = os.environ.get("YOUTUBE_CHANNEL_NAME", "소수몽키")
+# 영상 분석은 입력 토큰을 많이 써서 무료 한도를 빨리 소진한다. 0으로 두면 제목·설명만 쓴다.
+USE_VIDEO = os.environ.get("TISTORY_USE_VIDEO", "1").lower() not in ("0", "false", "no")
 KST = timezone(timedelta(hours=9))
 
 MARK_TITLE = "===TITLE==="
@@ -156,6 +158,12 @@ def generate(entry, today, today_ko):
         mark_naver=MARK_NAVER,
         embed_token=EMBED_TOKEN,
     )
+    if not USE_VIDEO:
+        return _finish(
+            gemini_client.generate(prompt, max_output_tokens=12000, use_search=True, timeout=600),
+            entry,
+        )
+
     try:
         raw = gemini_client.generate(
             prompt,
@@ -173,6 +181,10 @@ def generate(entry, today, today_ko):
             use_search=True,
             timeout=600,
         )
+    return _finish(raw, entry)
+
+
+def _finish(raw, entry):
     title, html, naver = split_sections(raw)
     html = clean_html(html)
 
