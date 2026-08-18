@@ -45,6 +45,8 @@ jobs:
         run: python3 .github/scripts/tistory_post.py
 
       - name: Commit state and drafts
+        # 원고 생성이 실패해도 카톡은 이미 나갔으므로 상태는 반드시 기록한다.
+        if: always()
         run: |
           git add -A
           if git diff --cached --quiet; then

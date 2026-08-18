@@ -91,7 +91,7 @@ https://youtu.be/XXXXXXXXXXX      [영상 보기 버튼]
 | `YOUTUBE_HANDLE` | `sosumonkey` | 채널 ID로 조회가 실패하면 이 핸들로 ID를 다시 찾습니다 |
 | `YOUTUBE_CHANNEL_NAME` | `소수몽키` | 메시지·글에 표기할 채널 이름 |
 | `YOUTUBE_SUMMARY_LIMIT` | `85` | 카카오톡 요약문 최대 글자 수 |
-| `GEMINI_MODEL` | `gemini-2.5-flash` | 요약·글 생성에 쓰는 모델. 이름이 맞지 않으면 쓸 수 있는 모델을 자동으로 찾습니다 |
+| `GEMINI_MODEL` | `gemini-3.6-flash` | 요약·글 생성에 쓰는 모델. 모델이 바뀌면 API 안내와 모델 목록을 보고 자동으로 대체합니다 |
 
 실행 시각은 워크플로의 `cron`으로 바꿉니다. 현재 `"0 22 * * *"`(UTC) = **한국 시간 오전 7시**입니다.
 UTC 기준이라 한국 시간에서 9시간을 빼서 적으면 됩니다 (오전 8시 → `"0 23 * * *"`).

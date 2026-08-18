@@ -2,17 +2,21 @@
 
 무료 티어로 쓸 수 있고, 유튜브 URL을 그대로 넘기면 영상 자체를 분석해 준다.
 결제수단 등록 없이 GEMINI_API_KEY 발급만으로 동작한다.
+
+모델 이름은 수시로 바뀌므로, 404가 나면
+  1) API가 오류 메시지로 알려 주는 대체 모델을 쓰고
+  2) 그래도 안 되면 계정에서 쓸 수 있는 모델 중 최신 flash 계열을 골라
+다시 시도한다.
 """
 
 import json
 import os
+import re
 import urllib.error
 import urllib.request
 
 BASE = "https://generativelanguage.googleapis.com/v1beta"
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
-# 모델 이름이 바뀌었을 때 자동으로 시도해 볼 후보들
-MODEL_FALLBACKS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest"]
+DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 
 _resolved_model = None
 
@@ -43,10 +47,19 @@ def _post(path, payload, timeout):
         raise GeminiError(f"HTTP {exc.code}: {body}") from exc
 
 
+def _suggested_model(message):
+    """'Please update your code to use models/X' 같은 안내에서 모델 이름을 뽑는다."""
+    match = re.search(r"use\s+models/([A-Za-z0-9._-]+)", message)
+    return match.group(1) if match else None
+
+
+def _version_key(name):
+    numbers = re.findall(r"(\d+(?:\.\d+)?)", name)
+    return float(numbers[0]) if numbers else 0.0
+
+
 def _list_models():
-    req = urllib.request.Request(
-        f"{BASE}/models", headers={"x-goog-api-key": _key()}
-    )
+    req = urllib.request.Request(f"{BASE}/models", headers={"x-goog-api-key": _key()})
     with urllib.request.urlopen(req, timeout=60) as resp:
         data = json.load(resp)
     return [
@@ -56,28 +69,24 @@ def _list_models():
     ]
 
 
-def _pick_model():
-    """설정된 모델이 없을 때 쓸 수 있는 모델을 찾아 준다."""
+def _pick_model(exclude=()):
+    """쓸 수 있는 모델 중 하나를 고른다. 이미 실패한 모델은 제외한다."""
     try:
-        names = _list_models()
+        names = [n for n in _list_models() if n not in exclude]
     except Exception as exc:  # noqa: BLE001
-        raise GeminiError(f"사용 가능한 모델 목록을 가져오지 못했습니다: {exc}") from exc
-    for candidate in MODEL_FALLBACKS:
-        if candidate in names:
-            return candidate
-    for name in names:
-        if "flash" in name:
-            return name
-    if names:
-        return names[0]
-    raise GeminiError("이 API 키로 쓸 수 있는 모델이 없습니다.")
+        print(f"[warn] 모델 목록 조회 실패: {exc}")
+        return None
+    if not names:
+        return None
+    # flash 계열 우선, 그중 버전이 높은 것 우선
+    names.sort(key=lambda n: ("flash" in n, _version_key(n)), reverse=True)
+    return names[0]
 
 
 def _extract_text(data):
     candidates = data.get("candidates") or []
     if not candidates:
-        feedback = data.get("promptFeedback", {})
-        raise GeminiError(f"응답이 비어 있습니다. promptFeedback={feedback}")
+        raise GeminiError(f"응답이 비어 있습니다. promptFeedback={data.get('promptFeedback', {})}")
     candidate = candidates[0]
     text = "".join(
         part.get("text", "") for part in candidate.get("content", {}).get("parts", [])
@@ -108,24 +117,30 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
         payload["tools"] = [{"google_search": {}}]
 
     model = _resolved_model or DEFAULT_MODEL
-    try:
-        data = _post(f"models/{model}:generateContent", payload, timeout)
-    except GeminiError as exc:
-        message = str(exc)
-        # 검색 도구를 함께 못 쓰는 경우 도구 없이 한 번 더 시도한다.
-        if use_search and "HTTP 400" in message:
-            print("[warn] 검색 도구를 쓸 수 없어 도구 없이 다시 시도합니다.")
-            payload.pop("tools", None)
-            data = _post(f"models/{model}:generateContent", payload, timeout)
-        # 모델 이름이 맞지 않으면 쓸 수 있는 모델을 찾아 다시 시도한다.
-        elif "HTTP 404" in message and _resolved_model is None:
-            picked = _pick_model()
-            print(f"[info] '{model}' 모델을 쓸 수 없어 '{picked}' 로 대체합니다.")
-            _resolved_model = picked
-            data = _post(f"models/{picked}:generateContent", payload, timeout)
-        else:
-            raise
-    else:
-        _resolved_model = model
+    tried = set()
 
-    return _extract_text(data)
+    for _ in range(4):
+        tried.add(model)
+        try:
+            data = _post(f"models/{model}:generateContent", payload, timeout)
+        except GeminiError as exc:
+            message = str(exc)
+            # 검색 도구를 함께 못 쓰는 경우 도구 없이 한 번 더 시도한다.
+            if "HTTP 400" in message and "tools" in payload:
+                print("[warn] 검색 도구를 쓸 수 없어 도구 없이 다시 시도합니다.")
+                payload.pop("tools")
+                continue
+            # 모델 이름이 맞지 않으면 다른 모델로 바꿔 다시 시도한다.
+            if "HTTP 404" in message:
+                nxt = _suggested_model(message)
+                if not nxt or nxt in tried:
+                    nxt = _pick_model(exclude=tried)
+                if nxt and nxt not in tried:
+                    print(f"[info] '{model}' 모델을 쓸 수 없어 '{nxt}' 로 대체합니다.")
+                    model = nxt
+                    continue
+            raise
+        _resolved_model = model
+        return _extract_text(data)
+
+    raise GeminiError("쓸 수 있는 모델을 찾지 못했습니다. GEMINI_MODEL 값을 확인하세요.")
