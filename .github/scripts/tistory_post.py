@@ -20,8 +20,9 @@ import gemini_client
 
 NEW_VIDEOS_FILE = os.environ.get("NEW_VIDEOS_FILE", ".new_videos.json")
 CHANNEL_NAME = os.environ.get("YOUTUBE_CHANNEL_NAME", "소수몽키")
-# 자막이 없을 때만 영상을 직접 분석한다. 영상 분석은 입력 토큰을 훨씬 많이 쓴다.
-USE_VIDEO = os.environ.get("TISTORY_USE_VIDEO", "1").lower() not in ("0", "false", "no")
+# 영상을 직접 분석(재생)하면 입력 토큰을 훨씬 많이 써서 한도(429)에 먼저 걸린다.
+# 무료 티어 한도가 넉넉한 계정만 명시적으로 켜도록 기본값은 꺼둔다.
+USE_VIDEO = os.environ.get("TISTORY_USE_VIDEO", "0").lower() not in ("0", "false", "no")
 KST = timezone(timedelta(hours=9))
 
 MARK_TITLE = "===TITLE==="
@@ -194,9 +195,16 @@ def generate(entry, today, today_ko):
             "위 자막이 영상의 실제 발화 내용입니다. 자막을 근거로 어떤 주장을 "
             "어떤 이유로 펴는지 파악하세요. 자막에 없는 내용을 영상이 말했다고 쓰지 마세요."
         )
-    else:
+    elif USE_VIDEO:
         transcript_block = ""
         source_instruction = "첨부된 영상을 직접 보고, 어떤 주장을 어떤 근거로 펴는지 파악하세요."
+    else:
+        transcript_block = ""
+        source_instruction = (
+            "자막도 영상도 없이 제목과 설명란만 있습니다. 설명란에 없는 발언·수치를 "
+            "영상이 말했다고 지어내지 말고, 제목과 설명란이 가리키는 주제에 대해 "
+            "검색으로 확인되는 사실관계만으로 정리하세요."
+        )
 
     prompt = PROMPT.format(
         channel=CHANNEL_NAME,

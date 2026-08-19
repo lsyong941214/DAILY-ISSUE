@@ -7,6 +7,7 @@
 
 import json
 import re
+import urllib.parse
 
 import http_util
 
@@ -16,15 +17,60 @@ PREFERRED = ("ko", "ko-KR", "en", "en-US")
 MAX_CHARS = 20000
 
 
-def _caption_tracks(video_id):
-    html = http_util.get(f"https://www.youtube.com/watch?v={video_id}").decode("utf-8", "replace")
+def _caption_tracks_from_watch(video_id):
+    """watch 페이지에 박혀 있는 플레이어 응답 JSON에서 자막 목록을 찾는다."""
+    html = http_util.get(f"https://www.youtube.com/watch?v={video_id}&hl=en").decode(
+        "utf-8", "replace"
+    )
     match = re.search(r'"captionTracks":(\[.*?\])', html)
     if not match:
+        print(f"[info] captionTracks를 찾지 못했습니다 (페이지 {len(html)}자).")
         return []
     try:
         return json.loads(match.group(1))
     except json.JSONDecodeError:
         return []
+
+
+def _caption_tracks_from_timedtext(video_id):
+    """watch 페이지 스크래핑이 막혔을 때를 대비한 목록 API 폴백."""
+    try:
+        xml = http_util.get(
+            f"https://www.youtube.com/api/timedtext?type=list&v={video_id}"
+        ).decode("utf-8", "replace")
+    except Exception as exc:  # noqa: BLE001 - 마지막 폴백이라 원인 구분이 필요 없다
+        print(f"[warn] timedtext 목록 조회 실패: {exc}")
+        return []
+
+    tracks = []
+    for m in re.finditer(r"<track\b([^>]*)/?>", xml):
+        attrs = dict(re.findall(r'(\w+)="([^"]*)"', m.group(1)))
+        lang = attrs.get("lang_code", "")
+        if not lang:
+            continue
+        kind = "asr" if attrs.get("kind") == "asr" else ""
+        params = {"lang": lang, "v": video_id}
+        if kind:
+            params["kind"] = kind
+        if attrs.get("name"):
+            params["name"] = attrs["name"]
+        tracks.append(
+            {
+                "languageCode": lang,
+                "kind": kind,
+                "baseUrl": "https://www.youtube.com/api/timedtext?" + urllib.parse.urlencode(params),
+            }
+        )
+    return tracks
+
+
+def _caption_tracks(video_id):
+    try:
+        tracks = _caption_tracks_from_watch(video_id)
+    except Exception as exc:  # noqa: BLE001 - 없으면 없는 대로 다음 방법을 쓴다
+        print(f"[warn] watch 페이지에서 자막 목록 조회 실패: {exc}")
+        tracks = []
+    return tracks or _caption_tracks_from_timedtext(video_id)
 
 
 def _pick(tracks):

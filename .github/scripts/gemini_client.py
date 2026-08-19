@@ -130,8 +130,11 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
     tried = set()
 
     quota_waits = list(RETRY_WAITS)
+    last_quota_message = None
 
-    for _ in range(8):
+    # 모델을 바꿔 가며 재시도할 수 있어 8회로는 부족할 수 있다. 넉넉히 잡아 두고,
+    # 그래도 다 못 쓰면 마지막 상태가 한도(429)였는지로 예외 종류를 정확히 가른다.
+    for _ in range(20):
         tried.add(model)
         try:
             data = _post(f"models/{model}:generateContent", payload, timeout)
@@ -139,6 +142,7 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
             message = str(exc)
             # 분당/일일 한도에 걸린 경우 잠시 기다렸다 다시 시도한다.
             if "HTTP 429" in message:
+                last_quota_message = message
                 if quota_waits:
                     wait = quota_waits.pop(0)
                     print(f"[warn] 사용량 한도(429)에 걸려 {wait}초 뒤 다시 시도합니다.")
@@ -170,4 +174,6 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
         _resolved_model = model
         return _extract_text(data)
 
+    if last_quota_message:
+        raise QuotaError(last_quota_message)
     raise GeminiError("쓸 수 있는 모델을 찾지 못했습니다. GEMINI_MODEL 값을 확인하세요.")
