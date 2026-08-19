@@ -144,6 +144,13 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
                     print(f"[warn] 사용량 한도(429)에 걸려 {wait}초 뒤 다시 시도합니다.")
                     time.sleep(wait)
                     continue
+                # 같은 모델을 계속 기다려도 안 되면, 한도가 다른 모델로 바꿔 본다.
+                nxt = _pick_model(exclude=tried)
+                if nxt:
+                    print(f"[warn] '{model}' 한도가 회복되지 않아 '{nxt}' 로 바꿔 다시 시도합니다.")
+                    model = nxt
+                    quota_waits = list(RETRY_WAITS)
+                    continue
                 raise QuotaError(message) from exc
             # 검색 도구를 함께 못 쓰는 경우 도구 없이 한 번 더 시도한다.
             if "HTTP 400" in message and "tools" in payload:
