@@ -131,9 +131,12 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
 
     quota_waits = list(RETRY_WAITS)
     last_quota_message = None
+    # 한도 때문에 모델을 바꾸는 횟수 상한. 계정 전체가 막힌 경우(모델을 아무리
+    # 바꿔도 안 풀림) 모델 목록을 끝까지 훑느라 재시도 대기만 몇 분씩 쌓이는
+    # 것을 막는다 — 몇 개만 시도해 보고 안 되면 빨리 포기하고 다음 단계로 넘어간다.
+    MAX_MODEL_SWITCHES_ON_QUOTA = 2
+    quota_switches = 0
 
-    # 모델을 바꿔 가며 재시도할 수 있어 8회로는 부족할 수 있다. 넉넉히 잡아 두고,
-    # 그래도 다 못 쓰면 마지막 상태가 한도(429)였는지로 예외 종류를 정확히 가른다.
     for _ in range(20):
         tried.add(model)
         try:
@@ -149,8 +152,10 @@ def generate(prompt, video_url=None, max_output_tokens=8192, use_search=False, t
                     time.sleep(wait)
                     continue
                 # 같은 모델을 계속 기다려도 안 되면, 한도가 다른 모델로 바꿔 본다.
-                nxt = _pick_model(exclude=tried)
+                # 단, 몇 개 안 되면 계정 전체가 막힌 것이니 더 뒤지지 않고 포기한다.
+                nxt = _pick_model(exclude=tried) if quota_switches < MAX_MODEL_SWITCHES_ON_QUOTA else None
                 if nxt:
+                    quota_switches += 1
                     print(f"[warn] '{model}' 한도가 회복되지 않아 '{nxt}' 로 바꿔 다시 시도합니다.")
                     model = nxt
                     quota_waits = list(RETRY_WAITS)
