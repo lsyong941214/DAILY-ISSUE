@@ -1,10 +1,13 @@
 name: YouTube to KakaoTalk
 
 on:
-  schedule:
-    # 매일 22:00 UTC = 한국 시간 다음날 오전 7시.
-    # 전날 저녁에 올라온 영상을 아침에 한 번 확인한다.
-    - cron: "0 22 * * *"
+  # 스케줄 비활성화: Gemini API 키의 사용량 한도가 사실상 0으로 보여
+  # (계정에 있는 모델 3개 모두 429) 매일 자동 실행을 잠시 멈춰 둔다.
+  # 한도 확인/조치 후 아래 schedule 블록 주석을 풀면 다시 켤 수 있다.
+  # schedule:
+  #   # 매일 22:00 UTC = 한국 시간 다음날 오전 7시.
+  #   # 전날 저녁에 올라온 영상을 아침에 한 번 확인한다.
+  #   - cron: "0 22 * * *"
   workflow_dispatch:
     inputs:
       force:

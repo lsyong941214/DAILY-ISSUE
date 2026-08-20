@@ -5,11 +5,17 @@ GitHub Actions로 돌아가는 개인 알림·콘텐츠 자동화 모음입니�
 | 워크플로 | 하는 일 | 실행 시점 |
 | --- | --- | --- |
 | `.github/workflows/kakao-briefing.yml` | `briefing.txt` 내용을 카카오톡으로 전송 | `briefing.txt`가 main에 push될 때 |
-| `.github/workflows/youtube-kakao.yml` | 유튜브 새 영상 → 카카오톡 알림 + 티스토리 포스팅 자료 생성 | 매일 오전 7시(KST) + 수동 실행 |
+| `.github/workflows/youtube-kakao.yml` | 유튜브 새 영상 → 카카오톡 알림 + 티스토리 포스팅 자료 생성 | ⏸️ **자동 실행 비활성화** (수동 실행만 가능) |
 
 ---
 
 ## 유튜브 새 영상 루틴
+
+> ⏸️ **현재 매일 자동 실행이 꺼져 있습니다.** `GEMINI_API_KEY`의 사용량 한도가 사실상 0으로
+> 보여(계정에 있는 모델을 다 바꿔 봐도 전부 429) 자세한 원인을 확인하기 전까지 스케줄을
+> 멈춰 뒀습니다. [Google AI Studio](https://aistudio.google.com/apikey)에서 한도/결제 상태를
+> 확인한 뒤 `.github/workflows/youtube-kakao.yml`의 `schedule` 블록 주석을 풀면 다시 켤 수
+> 있습니다. `workflow_dispatch`(수동 실행)는 그대로 열려 있습니다.
 
 대상 채널: **소수몽키** ([@sosumonkey](https://www.youtube.com/@sosumonkey), `UCC3yfxS5qC6PCwDzetUuEWg`)
 
