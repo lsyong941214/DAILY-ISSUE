@@ -1,0 +1,215 @@
+<div style="max-width:800px; margin:0 auto; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:17px; line-height:1.8; color:#333; word-break:keep-all;">
+
+  <h1 style="font-size:28px; font-weight:700; line-height:1.4; color:#1a1a1a; margin:0 0 8px 0;">
+    코스피 낙폭 축소부터 앤트로픽 초대형 IPO까지, 오늘의 경제 이슈 정리
+  </h1>
+
+  <p style="font-size:14px; color:#888; margin:0 0 28px 0;">
+    2026년 8월 26일 기준 · 작성 2026.08.26
+  </p>
+
+  <p style="margin:0 0 28px 0;">
+    장중 6,400선까지 밀렸던 코스피가 개인·기관 매수에 힘입어 낙폭을 크게 줄였고, 한화는 인적분할 이후 재평가를 받으며 급등했습니다.
+    SK하이닉스는 성과급안이 근소한 표차로 부결된 반면 현대차는 111일 만에 극적으로 타결했는데요, 대출 규제의 세대별 온도차부터 싱가포르의 파격적인 저출산 대책까지
+    오늘 알아둘 만한 경제·사회 이슈 9가지를 정리했습니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    코스피 장중 6,400대까지 밀렸다 낙폭 축소, 코스닥은 상승 전환
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    외국인 대규모 매도에 흔들렸던 국내 증시가 개인과 기관의 매수세로 낙폭을 크게 줄였습니다.
+    <a href="https://www.infostockdaily.co.kr/news/articleView.html?idxno=217615" target="_blank" style="color:#1a5490; text-decoration:underline;">인포스탁데일리 보도</a>에 따르면 코스피는 장중 6,400선까지 밀렸다가 낙폭을 만회하며 전일 대비 0.68% 오른 6,742.74에 거래를 마쳤고, 코스닥도 1.70% 오른 827.15로 상승 마감했습니다.
+  </p>
+
+  <p style="margin:0 0 18px 0;">
+    장중에는 외국인이 코스피에서 3조원 넘게 순매도하며 지수를 끌어내렸지만, 개인과 기관이 빠르게 순매수로 대응하며 지수 방어에 성공했습니다.
+    코스닥 역시 외국인·기관의 순매수 전환에 힘입어 상승세로 돌아섰습니다.
+  </p>
+
+  <ul style="margin:0 0 26px 0; padding-left:22px;">
+    <li style="margin-bottom:9px;">코스피: 장중 6,400선까지 하락 → 0.68% 상승한 6,742.74 마감</li>
+    <li style="margin-bottom:9px;">코스닥: 1.70% 상승한 827.15 마감</li>
+    <li style="margin-bottom:9px;">외국인 대규모 순매도를 개인·기관 매수세가 상쇄</li>
+  </ul>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    앤트로픽 초대형 IPO 예고에 채권시장 수급 공백 우려
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    AI 기업 앤트로픽이 오는 10월 기업공개(IPO)를 추진하고 있습니다.
+    <a href="https://www.fnnews.com/news/202608131621585602" target="_blank" style="color:#1a5490; text-decoration:underline;">파이낸셜뉴스 보도</a>에 따르면 앤트로픽의 예상 기업가치는 2조 달러 이상으로, 기업가치 1조 7,700억 달러로 상장했던 스페이스X를 넘어서는 역대 최대 규모의 IPO가 될 것이라는 전망이 나옵니다. 투자자들은 클로드의 연간 매출이 2026년 말 기준 1,000억~1,200억 달러에 달할 것으로 보고 있습니다.
+  </p>
+
+  <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:14px 18px; margin:0 0 24px 0; font-size:15px; color:#444;">
+    시장에서는 대형 IPO와 함께 대규모 회사채 발행이 맞물릴 경우 채권시장의 수급 부담이 커질 수 있다는 우려가 나옵니다. 실제로 알파벳·메타 등 빅테크가 올해 발행한 채권 규모는 1,940억 달러로 전년 대비 79% 늘었고, 신규 회사채 청약 배율은 2월 5배에서 7월 2배 이하로 낮아지며 시장이 이미 포화 조짐을 보이고 있습니다.
+  </div>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    "쪼개니 몸값 쑥"…한화, 인적분할 후 재상장 첫날 20%대 급등
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.newsis.com/view/NISX20260825_0003761414" target="_blank" style="color:#1a5490; text-decoration:underline;">뉴시스 보도</a>에 따르면 한화가 인적분할 후 재상장 첫날인 25일, 존속법인 한화 주가는 20%대 급등했고 신설법인 한화M&S(한화머시너리앤서비스홀딩스)는 상한가를 기록했습니다.
+    한화는 지난달 15일 임시 주주총회에서 방산·조선·에너지·금융 부문을 존속법인에, 테크·라이프 부문을 신설법인으로 분리하는 인적분할안을 가결한 바 있습니다.
+  </p>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.newspim.com/news/view/20260825000468" target="_blank" style="color:#1a5490; text-decoration:underline;">뉴스핌 보도</a>에 따르면 한국투자증권은 거래정지 직전인 지난달 29일 ㈜한화 시가총액(약 5조 9,000억원)에 분할비율을 적용해 분할 후 두 회사 합산 시가총액을 약 7조 3,000억원으로 추산했는데, 이는 분할 전 대비 약 1조 4,000억원 늘어난 규모입니다. 한화는 최소 주당 배당금 1,000원 이상을 지급하겠다는 주주환원 방침도 밝혔습니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    SK하이닉스 노사합의안 25표차 부결, 현대차는 111일 만에 타결
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.hankyung.com/article/2026082520971" target="_blank" style="color:#1a5490; text-decoration:underline;">한국경제 보도</a>에 따르면 SK하이닉스의 올해 임금·단체협약 잠정합의안이 25일 조합원 투표에서 부결됐습니다. 초과이익분배금(PS)의 60%를 자사주로, 40%를 현금으로 지급하는 안이었는데 반대 7,535표(50.08%), 찬성 7,510표(49.92%)로 단 25표 차이로 갈렸습니다. 투표율은 93.81%에 달했습니다.
+  </p>
+
+  <p style="margin:0 0 18px 0;">
+    반면 <a href="https://www.g-enews.com/article/Industry/2026/08/202608250806584771112616b072_1" target="_blank" style="color:#1a5490; text-decoration:underline;">글로벌이코노믹 보도</a>에 따르면 현대차는 같은 날 지난 5월 상견례 이후 111일 만에 임금교섭 잠정합의안을 도출했습니다. 기본급 10만원 인상에 경영성과금 400%+1,270만원, 자사주 15주, 복지포인트 50만원 지급이 골자로, 현금성 보상 비중이 상대적으로 커 비교적 순조롭게 합의에 이르렀다는 평가입니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    대출 규제, 3040은 직격탄…20대만 나 홀로 증가
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.asiatoday.co.kr/kn/view.php?key=20260825010008435" target="_blank" style="color:#1a5490; text-decoration:underline;">아시아투데이 보도</a>에 따르면 2분기 차주당 신규 주택담보대출액은 평균 2억 829만원으로, 전분기보다 2,110만원 줄며 2013년 통계 편제 이후 최대 감소폭을 기록했습니다. 가계부채 관리를 강화한 금융당국의 대출 규제 여파입니다.
+  </p>
+
+  <p style="margin:0 0 18px 0;">
+    연령대별로는 40대가 3,537만원으로 가장 크게 줄었고, 30대(-2,632만원), 50대(-1,281만원), 60대 이상(-1,069만원) 순으로 감소했습니다. 반면 20대만 유일하게 392만원 늘었는데, 생애최초 주택 구입자와 무주택자 비중이 높아 규제 영향을 상대적으로 덜 받았기 때문으로 분석됩니다.
+  </p>
+
+  <figure style="margin:0 0 26px 0; text-align:center;">
+    <img src="data:image/png;base64,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" alt="2분기 세대별 신규 주택담보대출 증감액 차트"
+         style="width:100%; max-width:700px; height:auto; border:1px solid #e1e8ed; border-radius:6px;">
+    <figcaption style="font-size:13px; color:#888; margin-top:8px;">
+      2분기 세대별 신규 주택담보대출 증감액 · 출처:
+      <a href="https://www.asiatoday.co.kr/kn/view.php?key=20260825010008435" target="_blank" style="color:#888;">아시아투데이</a> 등 금융권 통계 종합
+    </figcaption>
+  </figure>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    "출산율 0.87" 싱가포르, 17세까지 7,600만원 지원하는 초강수
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://biz.heraldcorp.com/article/10850291" target="_blank" style="color:#1a5490; text-decoration:underline;">헤럴드경제 보도</a>에 따르면 싱가포르의 지난해 합계출산율이 0.87명으로 역대 최저치를 기록했습니다. 이에 로렌스 웡 총리는 자국 국적 신생아에게 '출산 선물'로 1만 싱가포르달러(약 1,000만원)를 주고, 기존 지원까지 합쳐 17세까지 총 7만 싱가포르달러(약 7,600만원)를 지원하겠다고 발표했습니다.
+  </p>
+
+  <table style="width:100%; border-collapse:collapse; margin:0 0 26px 0; font-size:15px;">
+    <thead>
+      <tr style="background:#f7f9fb;">
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:left; font-weight:600;">항목</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:right; font-weight:600;">내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">합계출산율</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">0.87명(역대 최저)</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">17세까지 누적 지원</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">약 7,600만원</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">2026~2027년 투입 예산</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">약 7조 6,000억원</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:#888; margin:-18px 0 26px 0;">
+    자료: <a href="https://biz.heraldcorp.com/article/10850291" target="_blank" style="color:#888;">헤럴드경제</a> · 2026년 8월 기준
+  </p>
+
+  <p style="margin:0 0 18px 0;">
+    맞벌이 부부에게는 자녀 수에 따라 유급휴가를 최대 12일까지 추가로 주고, 종일 보육시설 이용료도 월 16만원 수준으로 낮출 계획입니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    "퇴근 후 옆 부서 알바로 월 87만원"…日 대기업의 사내 부업 실험
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.fnnews.com/news/202608241739102322" target="_blank" style="color:#1a5490; text-decoration:underline;">파이낸셜뉴스 보도</a>에 따르면 일본 코니카미놀타가 지난달 '스킬 셰어' 제도를 정식 도입했습니다. 전문 인력이 필요한 부서가 사내 시스템에 업무 내용과 필요 기술, 기간을 올리면 관심 있는 직원이 소속 부서장의 허가를 받아 지원하는 방식입니다.
+  </p>
+
+  <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:14px 18px; margin:0 0 24px 0; font-size:15px; color:#444;">
+    참여 직원은 기존 급여와 별도로 월 최대 10만엔(약 87만원)을 받을 수 있습니다. 근무는 최대 3개월, 월 최대 20시간, 정규 근무시간 이후에만 가능하며 IT·사업기획 등 전문성이 필요한 업무로 제한됩니다. 대상은 비관리직과 재고용 시니어 직원 약 3,000명이며, 부업 참여 여부는 인사평가에 반영하지 않습니다.
+  </div>
+
+  <p style="margin:0 0 18px 0;">
+    디지털전환으로 단기 전문인력 수요는 늘었지만 외부 인력 확보가 어려워지자, 파견직이나 외부위탁 대신 사내 인재를 활용하기로 한 것입니다. 시범 운영에서 33건의 구인 중 24건이 매칭됐고, 앞으로 70~80건까지 확대할 계획입니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    "엄마가 하나만 사래요"…4만명 몰린 롯데월드타워 포켓몬 팝업
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://v.daum.net/v/20260825140237797" target="_blank" style="color:#1a5490; text-decoration:underline;">관련 보도</a>에 따르면 롯데백화점이 포켓몬스터 출시 30주년을 맞아 서울 잠실 롯데월드타워 아레나 잔디광장에서 8월 16일부터 31일까지 여는 '2026 롯데타운 서머마켓'에 약 4만 명이 몰렸습니다. 약 1,322㎡(400평) 규모의 행사장에는 어린아이를 동반한 부모부터 교복 차림 학생, 2030·중년층까지 다양한 연령대가 찾았습니다.
+  </p>
+
+  <p style="margin:0 0 18px 0;">
+    피카츄·파이리 피규어는 오전에 이미 물량이 소진돼 다음 날 재입고를 기다려야 했고, 행사장에서만 파는 튜브를 낀 고라파덕, 손가락에 끼우는 잉어킹 등 한정판 굿즈에도 발길이 이어졌습니다. 롯데백화점은 이번 행사를 시작으로 여름철 포켓몬 협업을 매년 정례화할 계획입니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    "20 yuan짜리 힐링"…중국 Z세대가 빠진 '반려돌' 열풍
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.sixthtone.com/news/1016207/stone-cold-craze:-why-china%E2%80%99s-gen-z-is-falling-for-pet-rocks" target="_blank" style="color:#1a5490; text-decoration:underline;">식스톤 보도</a>에 따르면 중국에서 평범한 돌멩이를 '반려돌'처럼 꾸미고 기르는 문화가 Z세대 사이에서 빠르게 퍼지고 있습니다. 타오바오에서 반려돌 판매량은 8월 한 달간 전월 대비 246% 늘었고, 구매자 대다수는 1995년 이후 출생 여성이었습니다. 가격은 대부분 20위안(약 3,900원) 안팎으로 평범한 조약돌 수준입니다.
+  </p>
+
+  <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:14px 18px; margin:0 0 24px 0; font-size:15px; color:#444;">
+    구매자 상당수는 애니메이션·서브컬처 팬으로, 좋아하는 캐릭터를 닮게 돌을 꾸미며 즐거움을 찾습니다. 푸단대 마케팅 부교수 장저는 "오늘날 소비 트렌드는 점점 더 자기 인식과 정서적 만족을 중심으로 움직이며, 이것이 취향 기반의 치유형 상품 성장을 이끌고 있다"고 설명했습니다. 먹이나 산책이 필요 없고 식물처럼 정교한 관리도 필요 없어, 성과를 즉시 요구받는 사회에서 벗어나 마음의 여유를 찾게 해준다는 반응이 많습니다.
+  </div>
+
+  <div style="background:#f7f9fb; border:1px solid #e1e8ed; border-radius:8px; padding:22px 24px; margin:40px 0 30px 0;">
+    <p style="font-size:18px; font-weight:700; color:#1a5490; margin:0 0 14px 0;">한 줄 정리</p>
+    <ol style="margin:0; padding-left:20px; font-size:16px;">
+      <li style="margin-bottom:9px;">코스피는 장중 6,400선까지 밀렸다가 개인·기관 매수로 낙폭을 줄여 0.68% 상승 마감했습니다</li>
+      <li style="margin-bottom:9px;">앤트로픽의 2조 달러대 초대형 IPO 예고에 채권시장 수급 부담 우려가 나옵니다</li>
+      <li style="margin-bottom:9px;">한화는 인적분할 후 재상장 첫날 20%대 급등하며 재평가받았습니다</li>
+      <li style="margin-bottom:9px;">SK하이닉스 노사합의안은 25표차로 부결됐지만, 현대차는 111일 만에 타결했습니다</li>
+      <li style="margin-bottom:9px;">대출 규제로 3040 신규 주담대는 크게 줄었지만 20대만 나 홀로 늘었습니다</li>
+      <li style="margin-bottom:9px;">출산율 0.87명의 싱가포르는 17세까지 7,600만원을 지원하는 파격 대책을 내놨습니다</li>
+      <li style="margin-bottom:9px;">일본 코니카미놀타는 사내 부업으로 월 87만원을 더 벌 수 있는 제도를 도입했습니다</li>
+      <li style="margin-bottom:9px;">롯데월드타워 포켓몬 팝업스토어에는 약 4만 명이 몰렸습니다</li>
+      <li>중국 Z세대 사이에서는 저렴한 '반려돌'을 꾸미고 기르는 힐링 문화가 유행하고 있습니다</li>
+    </ol>
+  </div>
+
+  <h1 style="font-size:20px; font-weight:700; color:#1a1a1a; margin:38px 0 14px 0; padding-bottom:8px; border-bottom:1px solid #e1e8ed;">
+    참고 자료
+  </h1>
+  <ol style="margin:0 0 30px 0; padding-left:22px; font-size:14px; color:#666; line-height:1.9;">
+    <li>인포스탁데일리, <a href="https://www.infostockdaily.co.kr/news/articleView.html?idxno=217615" target="_blank" style="color:#1a5490;">「[0825마감체크] 코스피, 장중 4%대 하락 딛고 상승 전환… 6700선 회복」</a>, 2026.08.25</li>
+    <li>파이낸셜뉴스, <a href="https://www.fnnews.com/news/202608131621585602" target="_blank" style="color:#1a5490;">「앤트로픽 IPO서 몸값 2조 달러 넘나…투자자 "3조 달러도 간다"」</a>, 2026.08.13</li>
+    <li>뉴시스, <a href="https://www.newsis.com/view/NISX20260825_0003761414" target="_blank" style="color:#1a5490;">「한화, 인적분할 후 재상장 첫날 20%대 급등」</a>, 2026.08.25</li>
+    <li>뉴스핌, <a href="https://www.newspim.com/news/view/20260825000468" target="_blank" style="color:#1a5490;">「김동선號 한화M&S, 상한가 데뷔…시총은 분할 전 환산치 밑돌아」</a>, 2026.08.25</li>
+    <li>한국경제, <a href="https://www.hankyung.com/article/2026082520971" target="_blank" style="color:#1a5490;">「SK하이닉스, 성과급 60% 자사주 부결」</a>, 2026.08.25</li>
+    <li>글로벌이코노믹, <a href="https://www.g-enews.com/article/Industry/2026/08/202608250806584771112616b072_1" target="_blank" style="color:#1a5490;">「현대차 노사, 임금교섭 잠정합의…111일 만에 파업 마침표」</a>, 2026.08.25</li>
+    <li>아시아투데이, <a href="https://www.asiatoday.co.kr/kn/view.php?key=20260825010008435" target="_blank" style="color:#1a5490;">「대출 규제 여파 30·40대에 집중…신규 주담대 역대 최대폭 감소」</a>, 2026.08.25</li>
+    <li>헤럴드경제, <a href="https://biz.heraldcorp.com/article/10850291" target="_blank" style="color:#1a5490;">「"아이 낳으면 7600만원" 출산율 0.87 사상 최저, '초강수' 꺼낸 싱가포르」</a></li>
+    <li>파이낸셜뉴스, <a href="https://www.fnnews.com/news/202608241739102322" target="_blank" style="color:#1a5490;">「月87만원 받고 다른 부서서 '투잡'..사내 부업 도입한 日기업」</a>, 2026.08.24</li>
+    <li>다음(르포), <a href="https://v.daum.net/v/20260825140237797" target="_blank" style="color:#1a5490;">「"엄마가 하나만 사래요"…4만명 몰린 '포켓몬 성지'」</a>, 2026.08.25</li>
+    <li>Sixth Tone, <a href="https://www.sixthtone.com/news/1016207/stone-cold-craze:-why-china%E2%80%99s-gen-z-is-falling-for-pet-rocks" target="_blank" style="color:#1a5490;">「Stone Cold Craze: Why China's Gen Z Is Falling for Pet Rocks」</a></li>
+  </ol>
+
+  <p style="font-size:13px; color:#999; background:#fafafa; padding:14px 16px; border-radius:6px; margin:0 0 26px 0;">
+    본 글은 정보 제공을 목적으로 작성되었으며 특정 종목·상품에 대한 투자를 권유하지 않습니다.
+    수치는 2026년 8월 26일 기준이며 이후 변동될 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.
+  </p>
+
+  <p style="font-size:14px; color:#1a5490; margin:0;">
+    #코스피코스닥 #앤트로픽IPO #한화인적분할 #SK하이닉스노사협상 #주택담보대출규제 #싱가포르저출산 #경제뉴스
+  </p>
+
+</div>
