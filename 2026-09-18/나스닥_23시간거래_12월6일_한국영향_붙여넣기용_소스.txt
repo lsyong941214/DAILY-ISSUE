@@ -1,0 +1,127 @@
+<div style="max-width:800px; margin:0 auto; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:17px; line-height:1.8; color:#333; word-break:keep-all;">
+
+  <h1 style="font-size:28px; font-weight:700; line-height:1.4; color:#1a1a1a; margin:0 0 8px 0;">
+    나스닥 12월 23시간 거래 시작, 한국 서학개미 영향은
+  </h1>
+
+  <p style="font-size:14px; color:#888; margin:0 0 28px 0;">
+    2026년 9월 17일 기준 · 작성 2026.09.18
+  </p>
+
+  <p style="margin:0 0 28px 0;">
+    미국 주식을 밤낮없이 실시간으로 사고파는 시대가 눈앞으로 다가왔습니다. 나스닥이 오는 12월 6일부터 하루 23시간 거래 체제를 시작하기로 하면서 '서학개미'로 불리는 국내 미국 주식 투자자들의 관심이 쏠리고 있는데요, 구체적으로 무엇이 바뀌고 국내 증시에는 어떤 영향을 줄지 정리했습니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    나스닥 23시간 거래, 국내 서학개미에게 어떤 의미인가
+  </h1>
+
+  <p style="margin:0 0 10px 0;">
+    <a href="https://www.tokenpost.kr/news/market/409838" target="_blank" style="color:#1a5490; text-decoration:underline;">토큰포스트 보도</a>에 따르면 나스닥은 <span style="background-color:#fff3b0;">2026년 12월 6일 일요일</span>을 목표로 하루 23시간, 주 5일에 걸쳐 거의 끊김 없는 거래 체제로 전환할 계획입니다.
+  </p>
+  <p style="margin:0 0 10px 0;">
+    다만 이 일정은 증권 정보 처리 시스템(SIP)의 준비 상태와 미국 증권거래위원회(SEC)의 규정 변경 완료 여부에 달려 있어 유동적입니다.
+  </p>
+  <p style="margin:0 0 10px 0;">
+    <a href="https://www.newsis.com/view/NISX20251217_0003443899" target="_blank" style="color:#1a5490; text-decoration:underline;">뉴시스 보도</a>에 따르면 새로 생기는 '나이트 세션'은 미국 동부시간 오후 9시부터 다음날 오전 4시까지로, 한국시간으로는 오전 11시부터 오후 6시까지에 해당해 국내 증시가 열려 있는 낮 시간과 정확히 겹칩니다.
+  </p>
+  <p style="margin:0 0 10px 0;">
+    다만 시스템 점검과 다음 거래일 전환을 위해 매일 오후 8시부터 9시까지 1시간은 거래가 중단됩니다.
+  </p>
+  <div style="margin:0 0 18px 0;"></div>
+
+  <figure style="margin:0 0 26px 0; text-align:center;">
+    <img src="data:image/png;base64,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" alt="나스닥 거래 가능 시간 확대 비교 차트"
+         style="width:100%; max-width:700px; height:auto; border:1px solid #e1e8ed; border-radius:6px;">
+    <figcaption style="font-size:13px; color:#888; margin-top:8px;">
+      나스닥 하루 거래 가능 시간 비교 · 출처:
+      <a href="https://www.nasdaq.com/ko/24x5" target="_blank" style="color:#888;">나스닥(Nasdaq)</a>
+    </figcaption>
+  </figure>
+
+  <p style="margin:26px 0 10px 0; font-size:16px; font-weight:700; color:#1a5490;">국내 증시·투자자에게 어떤 의미인가</p>
+
+  <p style="margin:0 0 10px 0;">
+    지금까지는 국내 증시가 열려 있는 낮 시간에 미국 주식을 실시간으로 거래할 방법이 마땅치 않았습니다.
+  </p>
+  <p style="margin:0 0 10px 0;">
+    한국거래소는 이런 수요에 대응해 애프터마켓(오후 4~8시)과 대체거래소 넥스트레이드(오전 8시~오후 8시)를 운영하며 미국 주식 관련 상품 거래 시간을 늘려왔는데, 나스닥이 직접 본시장 시간을 23시간으로 넓히면 국내 개장 시간에 나스닥 본시장에서 실시간으로 거래할 수 있게 됩니다.
+  </p>
+  <p style="margin:0 0 10px 0;">
+    전문가들은 기존의 '주간거래(데이마켓)'가 유동성이 낮은 별도 시장에서 이뤄졌던 것과 달리, 이번 확장은 나스닥 본시장 규모 안에서 이뤄지는 만큼 가격발견 기능(시장에서 적정 가격이 형성되는 기능)이 개선될 것으로 기대합니다.
+  </p>
+  <p style="margin:0 0 10px 0;">
+    <b style="color:#e03131;">다만 거래 시간이 늘어난다고 실제 자금이 그만큼 더 몰릴까요?</b>
+  </p>
+  <p style="margin:0 0 10px 0;">
+    결국 수익률과 밸류에이션, 원/달러 환율 등 투자 매력도를 결정하는 근본적인 요인은 그대로이기 때문에, 거래 시간 확대 자체가 자금 이동을 좌우하지는 않을 것이라는 신중한 시각도 함께 나옵니다.
+  </p>
+  <div style="margin:0 0 18px 0;"></div>
+
+  <table style="width:100%; border-collapse:collapse; margin:0 0 8px 0; font-size:15px;">
+    <thead>
+      <tr style="background:#f7f9fb;">
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:left; font-weight:600;">구분</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:right; font-weight:600;">기존</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:right; font-weight:600;">23시간 체제(12월 6일~)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">거래 가능 시간</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">6시간 30분(정규장)</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">23시간(1시간 정비 제외)</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">나이트 세션</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">없음</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">美 동부 오후 9시~익일 오전 4시</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">한국시간 환산</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">-</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">오전 11시~오후 6시</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:#888; margin:0 0 26px 0;">
+    자료: 나스닥, 뉴시스·토큰포스트 종합 · 2026.09 기준
+  </p>
+
+  <div style="background:#f7f9fb; border:1px solid #e1e8ed; border-radius:8px; padding:22px 24px; margin:40px 0 30px 0;">
+    <p style="font-size:18px; font-weight:700; color:#1a5490; margin:0 0 14px 0;">한 줄 정리</p>
+    <ol style="margin:0; padding-left:20px; font-size:16px;">
+      <li style="margin-bottom:9px;">나스닥은 2026년 12월 6일부터 하루 23시간 거래를 목표로 SEC와 협의 중이며, 시스템 정비를 위한 1시간만 제외.</li>
+      <li style="margin-bottom:9px;">신설되는 나이트 세션(한국시간 오전 11시~오후 6시)은 국내 증시 개장 시간과 겹쳐 서학개미의 실시간 거래를 가능하게 함.</li>
+      <li style="margin-bottom:9px;">기존 주간거래보다 나스닥 본시장 규모에서 운영돼 가격발견 기능 개선이 기대되지만, 실제 자금 이동은 수익률·밸류에이션·환율 등에 달려 있음.</li>
+    </ol>
+  </div>
+
+  <h1 style="font-size:20px; font-weight:700; color:#1a1a1a; margin:38px 0 14px 0; padding-bottom:8px; border-bottom:1px solid #e1e8ed;">
+    참고 자료
+  </h1>
+  <ol style="margin:0 0 30px 0; padding-left:22px; font-size:14px; color:#666; line-height:1.9;">
+    <li>
+      뉴시스, <a href="https://www.newsis.com/view/NISX20251217_0003443899" target="_blank" style="color:#1a5490;">「서학개미에 희소식…나스닥, '23시간' 거래 시대 연다」</a>, 2025.12.17
+    </li>
+    <li>
+      토큰포스트, <a href="https://www.tokenpost.kr/news/market/409838" target="_blank" style="color:#1a5490;">「미국 주식 23시간 거래, 12월 6일 목표…청산 체제 가동」</a>, 2026.09
+    </li>
+    <li>
+      Benzinga Korea, <a href="https://kr.benzinga.com/uncategorized/%EB%B0%A4%EC%97%90%EB%8F%84-%EC%A3%BC%EC%8B%9D-%ED%95%9C%EB%8B%A4-%EB%82%98%EC%8A%A4%EB%8B%A5-23%EC%8B%9C%EA%B0%84-%EA%B1%B0%EB%9E%98-%EC%B6%94%EC%A7%84%EC%82%AC%EC%8B%A4/" target="_blank" style="color:#1a5490;">「"밤에도 주식 한다" 나스닥, '23시간 거래' 추진」</a>, 2026.09
+    </li>
+    <li>
+      나스닥(Nasdaq), <a href="https://www.nasdaq.com/ko/24x5" target="_blank" style="color:#1a5490;">「24x5 안내」</a>, 2026.09
+    </li>
+  </ol>
+
+  <p style="font-size:13px; color:#999; background:#fafafa; padding:14px 16px; border-radius:6px; margin:0 0 26px 0;">
+    본 글은 정보 제공을 목적으로 작성되었으며 특정 투자를 권유하지 않습니다.
+    수치는 2026년 9월 기준 기준이며 이후 변동될 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.
+  </p>
+
+  <p style="font-size:14px; color:#1a5490; margin:0;">
+    #나스닥 #23시간거래 #서학개미 #미국주식 #애프터마켓 #넥스트레이드 #해외주식투자
+  </p>
+
+</div>
