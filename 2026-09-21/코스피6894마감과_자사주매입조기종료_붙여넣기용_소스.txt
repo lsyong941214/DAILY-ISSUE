@@ -1,0 +1,159 @@
+<div style="max-width:800px; margin:0 auto; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:17px; line-height:1.8; color:#333; word-break:keep-all;">
+
+  <h1 style="font-size:28px; font-weight:700; line-height:1.4; color:#1a1a1a; margin:0 0 8px 0;">
+    추석 연휴 앞둔 코스피, 미중 정상회담·자사주 매입 종료가 변수
+  </h1>
+
+  <p style="font-size:14px; color:#888; margin:0 0 28px 0;">
+    2026년 9월 20일 기준 · 작성 2026.09.21
+  </p>
+
+  <p style="margin:0 0 28px 0;">
+    코스피가 9월 18일 <span style="background-color:#fff3b0;">6894.23</span>으로 마감하며 하루 만에 <span style="background-color:#fff3b0;">2.66%</span> 상승했습니다.
+  </p>
+  <p style="margin:0 0 28px 0;">
+    하지만 추석 연휴를 코앞에 두고 시장의 눈은 벌써 다음 변수로 향하고 있습니다.
+  </p>
+  <p style="margin:0 0 28px 0;">
+    연휴 직전 열리는 미중 정상회담과, 반년 가까이 증시를 떠받쳐온 삼성전자·SK하이닉스의 자사주 매입이 언제 끝나느냐가 관건입니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    코스피 6894선 마감, 미중 정상회담·유가·금리 3대 변수
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.etoday.co.kr/news/view/2627347" target="_blank" style="color:#1a5490; text-decoration:underline;">이투데이 보도</a>에 따르면 9월 18일 코스피는 전 거래일 대비 178.82포인트, <span style="background-color:#fff3b0;">2.66%</span> 오른 6894.23에 마감했습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    다만 9월 14일부터 18일까지 한 주간으로 보면 코스피는 오히려 <span style="background-color:#fff3b0;">0.23% 하락</span>했습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    같은 기간 코스닥은 <span style="background-color:#fff3b0;">6.27% 상승</span>하며 대조적인 흐름을 보였습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    이 기간 미국 10년물 국채금리는 장중 5%를 넘어섰다가 되돌림했고, 국제유가도 배럴당 100달러 이상으로 올랐다가 진정되는 등 대외 변수가 출렁였습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    미국 연방준비제도는 최근 기준금리를 0.25%포인트 올린 상태입니다.
+  </p>
+
+  <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:14px 18px; margin:0 0 24px 0; font-size:15px; color:#444;">
+    <strong style="color:#1a5490;">추석 연휴 전후 코스피 흐름</strong>이란? <a href="https://biz.heraldcorp.com/article/10878730" target="_blank" style="color:#1a5490;">헤럴드경제 보도</a>를 보면 대신증권 분석 기준 최근 10년간 연휴 전 5거래일 평균 수익률은 -0.42%, 연휴 후 5거래일 평균 수익률은 +0.68%로 나타났습니다.
+    연휴를 앞두고는 수급 공백으로 약세를 보이다가, 연휴가 끝나면 대기 수급이 유입되며 반등하는 패턴이 반복돼 왔다는 뜻입니다.
+  </div>
+
+  <p style="margin:0 0 18px 0;">
+    가장 큰 이벤트는 추석 연휴 직전인 9월 24일 백악관에서 열리는 미중 정상회담입니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.giprism.com/news/articleView.html?idxno=12790" target="_blank" style="color:#1a5490; text-decoration:underline;">시사프리즘 보도</a>에 따르면 이번 회담에서는 AI 기술 패권, 관세 휴전 연장, 희토류 공급망, 반도체 수출 규제 완화 여부가 핵심 의제로 다뤄질 예정입니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    미국은 희토류 공급과 미국산 상품 구매 확대를 원하고, 중국은 관세 인하와 첨단기술 수출규제 완화를 원하는 것으로 알려져 있어 협상 결과에 따라 반도체·AI 관련주의 변동성이 커질 수 있습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.businesspost.co.kr/BP?command=article_view&num=447530" target="_blank" style="color:#1a5490; text-decoration:underline;">비즈니스포스트 보도</a>에 따르면 NH투자증권은 이번 주 코스피 예상 밴드를 <span style="background-color:#fff3b0;">6400~7500</span>으로 제시했습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    연휴 기간에도 해외 증시는 정상적으로 개장하는 만큼, 연휴 중 해외발 변수에 따라 연휴 이후 국내 증시가 갭으로 반응할 가능성도 염두에 둘 부분입니다.
+  </p>
+  <p style="margin:0 0 26px 0;">
+    <b style="color:#e03131;">연휴를 앞두고 변동성이 커진 지금이 매수 기회일지, 관망할 시점일지는 결국 미중 회담 결과에 달려 있습니다.</b>
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    삼성전자·SK하이닉스 자사주 매입, 10월 중순 조기 종료 전망
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    코스피를 떠받쳐온 또 하나의 축은 삼성전자와 SK하이닉스의 대규모 자사주 매입입니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.fnnews.com/news/202609200605253703" target="_blank" style="color:#1a5490; text-decoration:underline;">파이낸셜뉴스 보도</a>에 따르면 삼성전자는 지난달 24일부터 20거래일간 3980만 주를 매입해 계획 물량(5328만5968주)의 <span style="background-color:#fff3b0;">74.69%</span>를 채웠고, 누적 매입액은 10조3078억원입니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    SK하이닉스는 지난달 20일부터 22거래일간 1415만 주를 매입해 계획 물량(2407만 주)의 <span style="background-color:#fff3b0;">58.79%</span>를 채웠고, 누적 매입액은 24조3900억원입니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    두 회사를 합친 누적 매입액은 34조6978억원에 이릅니다.
+  </p>
+
+  <figure style="margin:0 0 26px 0; text-align:center;">
+    <img src="data:image/png;base64,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" alt="삼성전자·SK하이닉스 자사주 매입 진행률 차트"
+         style="width:100%; max-width:700px; height:auto; border:1px solid #e1e8ed; border-radius:6px;">
+    <figcaption style="font-size:13px; color:#888; margin-top:8px;">
+      삼성전자·SK하이닉스 자사주 매입 진행률 · 출처:
+      <a href="https://www.fnnews.com/news/202609200605253703" target="_blank" style="color:#888;">파이낸셜뉴스</a>
+    </figcaption>
+  </figure>
+
+  <table style="width:100%; border-collapse:collapse; margin:0 0 8px 0; font-size:15px;">
+    <thead>
+      <tr style="background:#f7f9fb;">
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:left; font-weight:600;">구분</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:right; font-weight:600;">진행률</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:right; font-weight:600;">누적 매입액</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">삼성전자</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">74.69%</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">10조3078억원</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">SK하이닉스</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">58.79%</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">24조3900억원</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:#888; margin:-2px 0 26px 0;">
+    자료: <a href="https://www.fnnews.com/news/202609200605253703" target="_blank" style="color:#888;">파이낸셜뉴스</a> · 2026.09.20 기준
+  </p>
+
+  <p style="margin:0 0 18px 0;">
+    당초 삼성전자는 11월 21일까지, SK하이닉스는 11월 19일까지 매입을 예정했습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202609200035" target="_blank" style="color:#1a5490; text-decoration:underline;">한국경제TV 보도</a>에 따르면 현재 속도(삼성전자 하루 약 200만 주, SK하이닉스 하루 약 65만 주)라면 예정보다 한 달가량 앞당겨진 <span style="background-color:#fff3b0;">10월 중순</span>에 매입이 끝날 것으로 전망됩니다.
+  </p>
+  <p style="margin:0 0 26px 0;">
+    <b style="color:#e03131;">두 반도체 대장주의 매수세가 사라지면, 그 자리를 채워줄 다음 수급 주체가 있을지가 남은 관건입니다.</b>
+    외국인 자금의 순유입 지속 여부가 자사주 매입 종료 이후 코스피 방향을 가를 핵심 변수로 꼽힙니다.
+  </p>
+
+  <div style="background:#f7f9fb; border:1px solid #e1e8ed; border-radius:8px; padding:22px 24px; margin:40px 0 30px 0;">
+    <p style="font-size:18px; font-weight:700; color:#1a5490; margin:0 0 14px 0;">한 줄 정리</p>
+    <ol style="margin:0; padding-left:20px; font-size:16px;">
+      <li style="margin-bottom:9px;">코스피는 9월 18일 6894.23으로 마감(+2.66%)했지만 주간 기준으로는 소폭 하락했습니다.</li>
+      <li style="margin-bottom:9px;">9월 24일 미중 정상회담(AI·관세·희토류·반도체 규제 의제)이 연휴 직전 최대 변수입니다.</li>
+      <li style="margin-bottom:9px;">NH투자증권은 이번 주 코스피 밴드로 6400~7500을 제시했습니다.</li>
+      <li style="margin-bottom:9px;">삼성전자·SK하이닉스 자사주 매입은 당초 11월 예정에서 10월 중순으로 조기 종료될 전망입니다.</li>
+      <li>매입 종료 이후 수급 공백을 외국인 자금이 메워줄지가 다음 관전 포인트입니다.</li>
+    </ol>
+  </div>
+
+  <h1 style="font-size:20px; font-weight:700; color:#1a1a1a; margin:38px 0 14px 0; padding-bottom:8px; border-bottom:1px solid #e1e8ed;">
+    참고 자료
+  </h1>
+  <ol style="margin:0 0 30px 0; padding-left:22px; font-size:14px; color:#666; line-height:1.9;">
+    <li>이투데이, <a href="https://www.etoday.co.kr/news/view/2627347" target="_blank" style="color:#1a5490;">「[속보] 코스피 178.82p(2.66%) 오른 6894.23(마감)」</a>, 2026.09.18</li>
+    <li>헤럴드경제, <a href="https://biz.heraldcorp.com/article/10878730" target="_blank" style="color:#1a5490;">「[증시 예보] 추석 연휴 앞둔 코스피…美中 정상회담·유가·금리 주목」</a>, 2026.09.20</li>
+    <li>비즈니스포스트, <a href="https://www.businesspost.co.kr/BP?command=article_view&num=447530" target="_blank" style="color:#1a5490;">「NH투자 "다음주 코스피 6400~7500 예상, 단단한 실적에 추가 상승 여력"」</a>, 2026.09.20</li>
+    <li>시사프리즘, <a href="https://www.giprism.com/news/articleView.html?idxno=12790" target="_blank" style="color:#1a5490;">「대만 무기판매 140억 달러 승인 보류·희토류 정제 91%는 중국에…9·24 미중 정상회담의 두 협상 시계」</a>, 2026.09.20</li>
+    <li>파이낸셜뉴스, <a href="https://www.fnnews.com/news/202609200605253703" target="_blank" style="color:#1a5490;">「증시 떠받친 삼전닉스 자사주 매입…이르면 내달 중순 종료할듯」</a>, 2026.09.20</li>
+    <li>한국경제TV, <a href="https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202609200035" target="_blank" style="color:#1a5490;">「삼전닉스 자사주 매입 끝?…추석 후 '수급 절벽' 우려」</a>, 2026.09.20</li>
+  </ol>
+
+  <p style="font-size:13px; color:#999; background:#fafafa; padding:14px 16px; border-radius:6px; margin:0 0 26px 0;">
+    본 글은 정보 제공을 목적으로 작성되었으며 특정 투자를 권유하지 않습니다.
+    수치는 2026년 9월 20일 기준이며 이후 변동될 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.
+  </p>
+
+  <p style="font-size:14px; color:#1a5490; margin:0;">
+    #코스피전망 #미중정상회담 #자사주매입 #삼성전자 #SK하이닉스 #추석연휴증시 #코스피6894 #증시전망
+  </p>
+
+</div>
