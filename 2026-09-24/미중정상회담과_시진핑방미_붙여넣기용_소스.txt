@@ -1,0 +1,109 @@
+<div style="max-width:800px; margin:0 auto; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:17px; line-height:1.8; color:#333; word-break:keep-all;">
+
+  <h1 style="font-size:28px; font-weight:700; line-height:1.4; color:#1a1a1a; margin:0 0 8px 0;">
+    미중 정상회담, 시진핑 방미와 트럼프 백악관 회동 일정 정리
+  </h1>
+
+  <p style="font-size:14px; color:#888; margin:0 0 28px 0;">
+    2026년 9월 24일 기준 · 작성 2026.09.24
+  </p>
+
+  <p style="margin:0 0 28px 0;">
+    시진핑 중국 국가주석이 9월 23일부터 25일까지 미국을 국빈 방문합니다.
+    중국 최고지도자의 미국 국빈방문은 2015년 오바마 행정부 이후 11년 만입니다.
+    올해 들어서만 두 번째 미중 정상 대면 회담이라 무슨 이야기가 오가는지 관심이 큽니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    11년 만의 국빈방문, 일정은 2박 3일
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.newspim.com/news/view/20260921001189" target="_blank" style="color:#1a5490; text-decoration:underline;">뉴스핌 보도</a>에 따르면 중국 외교부는 9월 21일 시진핑 주석의 방미 일정을 공식 확인했습니다.
+    트럼프 대통령이 공항에서 직접 영접에 나선 것도 눈에 띄는 대목입니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.hankookilbo.com/news/article/A2026092116310004407" target="_blank" style="color:#1a5490; text-decoration:underline;">한국일보 보도</a>에 따르면 이번 방문은 <span style="background-color:#fff3b0;">올해 5월 회담 이후 6개월도 지나지 않아 성사된 두 번째 미중 정상 대면 회담</span>입니다.
+    양국이 짧은 간격을 두고 다시 마주 앉는다는 점에서 이례적이라는 평가가 나옵니다.
+  </p>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    백악관 환영식과 국빈만찬, 누가 참석하나
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    <a href="https://www.fnnews.com/news/202609231217098371" target="_blank" style="color:#1a5490; text-decoration:underline;">파이낸셜뉴스 보도</a>에 따르면 9월 24일에는 백악관 공식 환영식과 정상회담, 국빈만찬이 예정돼 있습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    국빈만찬에는 <span style="background-color:#fff3b0;">일론 머스크(테슬라), 제프 베이조스(아마존), 팀 쿡(애플), 젠슨 황(엔비디아)</span> 등 미국 주요 기업 CEO들이 참석하는 것으로 알려졌습니다.
+    <a href="https://biz.heraldcorp.com/article/10881155" target="_blank" style="color:#1a5490; text-decoration:underline;">헤럴드경제 보도</a>에 따르면 이들 기업의 대중 사업 비중을 감안할 때 이번 회담 결과에 직접 영향을 받을 수 있는 인사들입니다.
+  </p>
+
+  <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:14px 18px; margin:0 0 24px 0; font-size:15px; color:#444;">
+    <strong style="color:#1a5490;">국빈방문(State Visit)이란?</strong> 외국 정상급 인사를 초청하는 외교 의전 중 최고 등급으로, 공항 영접·백악관 환영식·국빈만찬 등 전 절차가 격식을 갖춰 진행됩니다.
+  </div>
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    이번 회담에서는 무엇을 논의하나
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    시장이 주목하는 의제는 관세 유예 연장, AI 관련 협력과 견제, 중국의 미국산 농산물 구매 확대, 희토류 수출 규제 완화 등입니다.
+    <a href="https://www.fnnews.com/news/202609240643398515" target="_blank" style="color:#1a5490; text-decoration:underline;">파이낸셜뉴스 보도</a>에 따르면 시진핑 주석은 24일 오전 워싱턴에 도착해 일정을 시작했습니다.
+  </p>
+  <p style="margin:0 0 18px 0;">
+    <a href="https://knewsla.com/usa/2026092310011357493/" target="_blank" style="color:#1a5490; text-decoration:underline;">관련 보도</a>에 따르면 25일에는 두 정상이 함께 워싱턴DC 국립기록보관소를 찾아 양국 관계의 역사를 살펴본 뒤 회담 일정을 마무리하고, 시진핑 주석은 귀국길에 오를 예정입니다.
+  </p>
+
+  <table style="width:100%; border-collapse:collapse; margin:0 0 26px 0; font-size:15px;">
+    <thead>
+      <tr style="background:#f7f9fb;">
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:left; font-weight:600;">날짜</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:left; font-weight:600;">일정</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">9월 23일</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">시진핑 주석 방미 시작</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">9월 24일</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">백악관 환영식 · 정상회담 · 국빈만찬</td>
+      </tr>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">9월 25일</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">국립기록보관소 방문 후 귀국</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:#888; margin:-18px 0 26px 0;">
+    자료: <a href="https://www.newspim.com/news/view/20260921001189" target="_blank" style="color:#888;">뉴스핌</a>, <a href="https://www.fnnews.com/news/202609231217098371" target="_blank" style="color:#888;">파이낸셜뉴스</a> · 2026.09.24 기준
+  </p>
+
+  <div style="background:#f7f9fb; border:1px solid #e1e8ed; border-radius:8px; padding:22px 24px; margin:40px 0 30px 0;">
+    <p style="font-size:18px; font-weight:700; color:#1a5490; margin:0 0 14px 0;">한 줄 정리</p>
+    <ol style="margin:0; padding-left:20px; font-size:16px;">
+      <li style="margin-bottom:9px;">시진핑 주석, 9월 23~25일 2박3일 일정으로 미국 국빈방문 — 2015년 이후 11년 만</li>
+      <li style="margin-bottom:9px;">올해 5월에 이어 6개월 만에 성사된 두 번째 미중 정상 대면 회담</li>
+      <li style="margin-bottom:9px;">24일 백악관 환영식·정상회담·국빈만찬, 머스크·베이조스·팀 쿡·젠슨 황 등 참석</li>
+      <li>관세 유예, AI, 농산물 구매, 희토류 수출 완화가 핵심 의제로 거론됨</li>
+    </ol>
+  </div>
+
+  <h1 style="font-size:20px; font-weight:700; color:#1a1a1a; margin:38px 0 14px 0; padding-bottom:8px; border-bottom:1px solid #e1e8ed;">
+    참고 자료
+  </h1>
+  <ol style="margin:0 0 30px 0; padding-left:22px; font-size:14px; color:#666; line-height:1.9;">
+    <li>뉴스핌, <a href="https://www.newspim.com/news/view/20260921001189" target="_blank" style="color:#1a5490;">「中 시진핑 23~25일 美 국빈방문, 트럼프 공항서 직접 영접」</a>, 2026.09.21</li>
+    <li>한국일보, <a href="https://www.hankookilbo.com/news/article/A2026092116310004407" target="_blank" style="color:#1a5490;">「시진핑, 미중 정상회담 위해 23~25일 미국 국빈 방문… 11년 만」</a>, 2026.09.21</li>
+    <li>파이낸셜뉴스, <a href="https://www.fnnews.com/news/202609231217098371" target="_blank" style="color:#1a5490;">「[미중정상회담 D-1]트럼프, 내일 오전 7시 공항서 시진핑 영접」</a>, 2026.09.23</li>
+    <li>파이낸셜뉴스, <a href="https://www.fnnews.com/news/202609240643398515" target="_blank" style="color:#1a5490;">「[미중정상회담]시진핑, 美 도착…트럼프 환영으로 2박3일 방미 시작」</a>, 2026.09.24</li>
+    <li>헤럴드경제, <a href="https://biz.heraldcorp.com/article/10881155" target="_blank" style="color:#1a5490;">「시진핑, 11년 만에 미국 국빈 방문…23~25일 트럼프 만난다」</a>, 2026.09.21</li>
+  </ol>
+
+  <p style="font-size:14px; color:#1a5490; margin:0;">
+    #미중정상회담 #시진핑 #트럼프 #국빈방문 #백악관 #미중관계 #관세협상 #희토류
+  </p>
+
+</div>
