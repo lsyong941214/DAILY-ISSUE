@@ -2,6 +2,7 @@ import base64
 import json
 import os
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -11,8 +12,12 @@ from nacl import encoding, public
 def post(url, data, headers=None):
     body = urllib.parse.urlencode(data).encode()
     req = urllib.request.Request(url, data=body, headers=headers or {})
-    with urllib.request.urlopen(req) as resp:
-        return json.load(resp)
+    try:
+        with urllib.request.urlopen(req) as resp:
+            return json.load(resp)
+    except urllib.error.HTTPError as e:
+        print(f"HTTP {e.code} from {url}: {e.read().decode(errors='replace')}", file=sys.stderr)
+        raise
 
 
 def request_json(url, method="GET", data=None, headers=None):
