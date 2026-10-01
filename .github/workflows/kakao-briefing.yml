@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "briefing.txt"
+  workflow_dispatch: {}
 
 jobs:
   send:
