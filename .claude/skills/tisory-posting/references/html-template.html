@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[제목] (템플릿 · 이 파일 자체는 산출물이 아님)</title>
+</head>
+<body style="margin:0; padding:32px 16px; background:#fff;">
+<!--
+티스토리 포스팅 본문 템플릿
+
+산출물 구조: 아래 "여기부터 복사 ~ 여기까지 복사" 사이의 <div> 블록만 잘라내
+[제목]_붙여넣기용_소스.txt 로 저장한다. 사용자는 그 .txt를 열어 전체 복사한 뒤
+티스토리 글쓰기 화면의 HTML 모드에 붙여넣는다.
+
+미리보기용 .html 파일은 만들지 않는다. 이 템플릿 파일 자체가 골격일 뿐이며,
+최종 산출물은 .txt 두 개(티스토리용 / 네이버용)다.
+
+.txt 로 잘라낼 때 <!DOCTYPE>, <html>, <head>, <body>, 이 안내 주석,
+복사 구간 마커는 모두 제거한다. 티스토리 본문에 들어가면 안 되는 것들이다.
+
+소제목은 전부 <h1> 이다(검색 유입을 노린 사용자의 명시적 요구).
+위계는 태그 종류가 아니라 인라인 font-size 로 준다.
+
+이미지는 base64 data URI로 본문에 심는다. 상대 경로(chart.png)로 두면 사용자가
+티스토리에 이미지를 따로 올리고 src를 일일이 바꿔야 한다. 붙여넣기 한 번으로 끝나게 한다.
+  - PNG를 그대로 넣으면 용량이 커지므로, 심기 전에 폭 1400px 이하로 줄이고
+    팔레트(64색) 변환 + optimize 로 압축한다. 차트는 평면 색이라 1/3 이하로 줄어든다.
+  - 최종 .txt 가 300KB를 넘으면 이미지를 더 줄이거나, 스킬 4-2 단계에 따라 글을 나눈다.
+
+규칙 (어기면 티스토리에서 깨진다):
+- 붙여넣기 구간 안에서는 인라인 style= 만 사용. <style> 블록과 외부 CSS는 에디터가 제거한다
+- <script> 금지, class 속성 금지(스킨 CSS와 충돌)
+- 색상은 아래 팔레트를 유지하면 어떤 스킨에서도 무난하다
+    본문 #333 / 보조 텍스트 #666 / 포인트 #1a5490 / 배경박스 #f7f9fb / 테두리 #e1e8ed
+- 표는 열 4개 이하, width:100%. 모바일 가로 스크롤 방지
+- 이미지는 width:100%; max-width:700px; height:auto 로 반응형 처리
+
+[대괄호] 부분은 전부 실제 내용으로 교체할 것. 남아 있으면 안 된다.
+-->
+
+<!-- ===== 여기부터 복사 : 티스토리 HTML 모드에 붙여넣기 ===== -->
+
+<div style="max-width:800px; margin:0 auto; font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:17px; line-height:1.8; color:#333; word-break:keep-all;">
+
+  <!-- ── 제목 ── 검색 키워드를 포함하되 담백하게. 낚시성 표현 금지 -->
+  <h1 style="font-size:28px; font-weight:700; line-height:1.4; color:#1a1a1a; margin:0 0 8px 0;">
+    [제목]
+  </h1>
+
+  <!-- 기준일: 시세·금리·정책 등 시점에 좌우되는 글에는 반드시 넣는다.
+       블로그 글은 몇 년 뒤에도 검색으로 유입되므로 기준일이 없으면 독자가 낡은 정보를 최신으로 오해한다 -->
+  <p style="font-size:14px; color:#888; margin:0 0 28px 0;">
+    [YYYY년 M월 D일] 기준 · 작성 [YYYY.MM.DD]
+  </p>
+
+  <!-- ── 도입 ── 2~3문장. "왜 지금 이걸 알아야 하는지" -->
+  <p style="margin:0 0 28px 0;">
+    [도입 문단]
+  </p>
+
+  <!-- ══════ 본문 섹션 — 자료에서 확인한 주제 수만큼 반복 (개수 상한 없음) ══════ -->
+
+  <h1 style="font-size:22px; font-weight:700; color:#1a1a1a; margin:40px 0 14px 0; padding-bottom:8px; border-bottom:2px solid #1a5490;">
+    [소제목 1]
+  </h1>
+
+  <p style="margin:0 0 18px 0;">
+    [본문. 문단은 3~4줄 이내로 짧게 — 독자 대부분이 모바일로 본다.
+    근거가 있는 문장에는 아래처럼 출처 링크를 자연스럽게 건다]
+    <a href="[출처 URL]" target="_blank" style="color:#1a5490; text-decoration:underline;">[매체명 보도]</a>에 따르면 [내용]입니다.
+  </p>
+
+  <!-- 용어 풀이 박스: 전문 용어가 처음 나올 때 -->
+  <div style="background:#f7f9fb; border-left:3px solid #1a5490; padding:14px 18px; margin:0 0 24px 0; font-size:15px; color:#444;">
+    <strong style="color:#1a5490;">[용어]</strong>란? [한두 문장으로 쉽게 풀이]
+  </div>
+
+  <!-- 이미지: src 는 반드시 data:image/png;base64,... 형태로 심는다 (위 주석 참고) -->
+  <figure style="margin:0 0 26px 0; text-align:center;">
+    <img src="data:image/png;base64,[BASE64_문자열]" alt="[이미지 설명]"
+         style="width:100%; max-width:700px; height:auto; border:1px solid #e1e8ed; border-radius:6px;">
+    <figcaption style="font-size:13px; color:#888; margin-top:8px;">
+      [이미지 설명] · 출처:
+      <a href="[출처 URL]" target="_blank" style="color:#888;">[기관/매체명]</a>
+    </figcaption>
+  </figure>
+
+  <!-- 핵심 수치 표: 열 4개 이하 -->
+  <table style="width:100%; border-collapse:collapse; margin:0 0 26px 0; font-size:15px;">
+    <thead>
+      <tr style="background:#f7f9fb;">
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:left; font-weight:600;">[항목]</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:right; font-weight:600;">[값]</th>
+        <th style="padding:12px 10px; border:1px solid #e1e8ed; text-align:right; font-weight:600;">[변화]</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed;">[내용]</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">[값]</td>
+        <td style="padding:11px 10px; border:1px solid #e1e8ed; text-align:right;">[변화]</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:#888; margin:-18px 0 26px 0;">
+    자료: <a href="[출처 URL]" target="_blank" style="color:#888;">[기관명]</a> · [기준 시점]
+  </p>
+
+  <!-- 목록형 정리 -->
+  <ul style="margin:0 0 26px 0; padding-left:22px;">
+    <li style="margin-bottom:9px;">[항목]</li>
+    <li style="margin-bottom:9px;">[항목]</li>
+  </ul>
+
+  <!-- ══════ 섹션 끝 · 주제 하나당 위 블록 하나. 주제를 빼지 말고 전부 반복할 것 ══════ -->
+
+  <!-- ── 한 줄 정리 ── 독자가 기억할 핵심. 섹션이 5개를 넘으면 항목도 그에 맞춰 늘린다 -->
+  <div style="background:#f7f9fb; border:1px solid #e1e8ed; border-radius:8px; padding:22px 24px; margin:40px 0 30px 0;">
+    <p style="font-size:18px; font-weight:700; color:#1a5490; margin:0 0 14px 0;">한 줄 정리</p>
+    <ol style="margin:0; padding-left:20px; font-size:16px;">
+      <li style="margin-bottom:9px;">[핵심 1]</li>
+      <li style="margin-bottom:9px;">[핵심 2]</li>
+      <li>[핵심 3]</li>
+    </ol>
+  </div>
+
+  <!-- ── 참고 자료 ── 본문 링크와 별개로 여기에 다시 정리한다.
+       본문 링크만 있으면 나중에 찾기 어렵고, 여기만 있으면 어느 문장의 근거인지 모른다 -->
+  <h1 style="font-size:20px; font-weight:700; color:#1a1a1a; margin:38px 0 14px 0; padding-bottom:8px; border-bottom:1px solid #e1e8ed;">
+    참고 자료
+  </h1>
+  <ol style="margin:0 0 30px 0; padding-left:22px; font-size:14px; color:#666; line-height:1.9;">
+    <li>
+      [매체·기관명], <a href="[URL]" target="_blank" style="color:#1a5490;">「[자료 제목]」</a>, [YYYY.MM.DD]
+    </li>
+    <li>
+      [매체·기관명], <a href="[URL]" target="_blank" style="color:#1a5490;">「[자료 제목]」</a>, [YYYY.MM.DD]
+    </li>
+  </ol>
+
+  <!-- ── 면책 ── 금융·투자·부동산 주제면 반드시 넣는다 -->
+  <p style="font-size:13px; color:#999; background:#fafafa; padding:14px 16px; border-radius:6px; margin:0 0 26px 0;">
+    본 글은 정보 제공을 목적으로 작성되었으며 특정 투자를 권유하지 않습니다.
+    수치는 [기준일] 기준이며 이후 변동될 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.
+  </p>
+
+  <!-- ── 태그 ── 5~8개 -->
+  <p style="font-size:14px; color:#1a5490; margin:0;">
+    #[태그1] #[태그2] #[태그3] #[태그4] #[태그5]
+  </p>
+
+</div>
+
+<!-- ===== 여기까지 복사 ===== -->
+
+</body>
+</html>
